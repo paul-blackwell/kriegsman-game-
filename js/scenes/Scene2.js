@@ -19,11 +19,11 @@ class Scene2 extends Phaser.Scene {
 
 
         // Add foreground
-        this.foreground = this.add.image(this.cameras.main.width / 2, config.height - 210, 'foreground');
+        this.foreground = this.add.image(this.cameras.main.width / 2, config.height - 205, 'foreground');
 
 
         // Add  sandbags
-        this.sandbags = this.add.image(this.cameras.main.width - 300, config.height - 210, 'sandbags');
+        this.sandbags = this.add.image(this.cameras.main.width - 300, config.height - 194, 'sandbags');
 
 
         // Add player sprite
