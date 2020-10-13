@@ -6,7 +6,7 @@ class Scene2 extends Phaser.Scene {
         this.state = {
             score: 0,
             gameOver: false,
-            ammunition: 10,
+            ammunition: 5,
             grenades: 0,
             reloading: false
         }
@@ -125,24 +125,22 @@ class Scene2 extends Phaser.Scene {
             return;
         }
 
-
-        this.player.play('player_shooting');
-
-
         /**
-        * If ammunition count is equal to 0 reload the gun and return
-        */
+         * If ammunition count is equal to 0 reload the gun and return
+         */
         if (this.state.ammunition === 0) {
             this.reloadGun();
             return;
         }
-
 
         // subtract one from the ammunition count
         if (this.state.ammunition > 0) {
             this.state.ammunition--;
             console.log(this.state.ammunition);
         }
+
+        // Play shooting animation 
+        this.player.play('player_shooting');
 
 
         // After one second set player to idle
@@ -164,13 +162,15 @@ class Scene2 extends Phaser.Scene {
 
         // Play reloading animation 
         this.player.play('player_reloading');
+        this.state.reloading = true;
 
         // Set ammunition count to 10
-        this.state.ammunition = 10;
+        this.state.ammunition = 5;
 
         // After one second set player to idle
         setTimeout(() => {
             this.idlePlayer();
+            this.state.reloading = false;
         }, 1000);
     }
 
