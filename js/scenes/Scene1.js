@@ -33,7 +33,11 @@ class Scene1 extends Phaser.Scene {
             frameHeight: 192,
         });
 
-
+        // Spritesheet for bullet
+        this.load.spritesheet('bullet', 'assets/spritesheets/bullet-sprite.png', {
+            frameWidth: 32,
+            frameHeight: 32,
+        });
     }
 
     create() {
@@ -71,6 +75,12 @@ class Scene1 extends Phaser.Scene {
             frameRate: 16,
         });
 
+        // Animation of the bullet in the air
+        this.anims.create({
+            key: 'bullet_anim',
+            frames: this.anims.generateFrameNumbers('bullet'), 
+            frameRate: 16,
+        });
     }
 
 

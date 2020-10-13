@@ -35,10 +35,12 @@ class Scene2 extends Phaser.Scene {
         //  Make variable to listen for space bar key so player can shoot
         this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
+        //  Make variable to listen for "R" key o player can reload
+        this.rkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
-        this.rkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R)
-        //  keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
-        //  this.rKey = this.input.keyboard.addKey('R');
+
+         // This will hold all the 'bullet' Instances in the scene 
+         this.projectiles = this.add.group();
 
     }
 
@@ -141,6 +143,12 @@ class Scene2 extends Phaser.Scene {
 
         // Play shooting animation 
         this.player.play('player_shooting');
+
+        
+        // Fire bullet but only after 500 milliseconds
+        setTimeout(() => {
+            new Bullet(this);
+        }, 500);
 
 
         // After one second set player to idle
