@@ -40,7 +40,7 @@ class Scene2 extends Phaser.Scene {
 
 
          // This will hold all the 'bullet' Instances in the scene 
-         this.projectiles = this.add.group();
+         this.bullets = this.add.group()
 
     }
 
@@ -63,6 +63,23 @@ class Scene2 extends Phaser.Scene {
                 this.reloadGun();
             }
         }
+
+
+        /**
+         * Run the update for each bullet, this will
+         * destroy a bullet when it gets 50px from the left 
+         * edge of the screen. if we don't it will cause performance
+         * problems as each bullet will go on forever
+         */
+        for (let i = 0; i < this.bullets.getChildren().length; i++) {
+            const bullet = this.bullets.getChildren()[i];
+            if(bullet.x < 50) {
+                bullet.destroy()
+                //bullet.body.velocity.x = 0;
+            }
+        }
+
+       
 
     }
 
@@ -147,7 +164,8 @@ class Scene2 extends Phaser.Scene {
         
         // Fire bullet but only after 500 milliseconds
         setTimeout(() => {
-            new Bullet(this);
+            // new Bullet(this);
+            this.bullet()
         }, 500);
 
 
@@ -180,6 +198,20 @@ class Scene2 extends Phaser.Scene {
             this.idlePlayer();
             this.state.reloading = false;
         }, 1000);
+    }
+
+
+    bullet() {
+        const x = this.player.x - 60;
+        const y = this.player.y - 45;
+
+         // Add player sprite
+         const bullet = this.physics.add.sprite(x, y, 'bullet');
+         bullet.play('bullet_anim');
+
+         bullet.body.velocity.x = -1000;
+         this.bullets.add(bullet)
+         console.log(this.bullets);
     }
 
 
