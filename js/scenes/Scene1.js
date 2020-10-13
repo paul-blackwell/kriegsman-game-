@@ -6,7 +6,13 @@ class Scene1 extends Phaser.Scene {
 
     // Preload all Images an spites 
     preload() {
+
+        // Image for background
         this.load.image('foreground', 'assets/images/foreground.png');
+
+
+        // Image for Sandbags
+        this.load.image('sandbags', 'assets/images/sandbags.png');
 
 
         // Spitesheet for player Idle
