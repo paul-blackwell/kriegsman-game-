@@ -5,7 +5,7 @@ class Scene1 extends Phaser.Scene {
     }
 
     // Preload all Images an spites 
-    preload(){
+    preload() {
         this.load.image('foreground', 'assets/images/foreground.png');
 
 
@@ -21,6 +21,19 @@ class Scene1 extends Phaser.Scene {
             frameHeight: 192,
         });
 
+        // Spitesheet for player Shooting
+        this.load.spritesheet('playerShooting', 'assets/spritesheets/krieg-guardsman-animated-shooting-sprite.png', {
+            frameWidth: 192,
+            frameHeight: 192,
+        });
+
+         // Spitesheet for player reloading
+         this.load.spritesheet('playerReloading', 'assets/spritesheets/krieg-guardsman-animated-reloading-sprite.png', {
+            frameWidth: 192,
+            frameHeight: 192,
+        });
+
+
     }
 
     create() {
@@ -33,15 +46,30 @@ class Scene1 extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('player'), // using the frames from the player sprite sheet
             frameRate: 16,
             repeat: -1
-        })
+        });
 
         // Animation of the player walking
         this.anims.create({
             key: 'player_walking',
-            frames: this.anims.generateFrameNumbers('playerWalking'), // using the frames from the player sprite sheet
+            frames: this.anims.generateFrameNumbers('playerWalking'), 
             frameRate: 16,
             repeat: -1
-        })
+        });
+
+
+        // Animation of the player Shooting 
+        this.anims.create({
+            key: 'player_shooting',
+            frames: this.anims.generateFrameNumbers('playerShooting'), 
+            frameRate: 16,
+        });
+
+        // Animation of the player Shooting 
+        this.anims.create({
+            key: 'player_reloading',
+            frames: this.anims.generateFrameNumbers('playerReloading'), 
+            frameRate: 16,
+        });
 
     }
 

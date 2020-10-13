@@ -2,11 +2,19 @@ class Scene2 extends Phaser.Scene {
 
     constructor() {
         super('playGame');
+
+        this.state = {
+            score: 0,
+            gameOver: false,
+            ammunition: 10,
+            grenades: 0,
+            reloading: false
+        }
     }
 
     create() {
 
-        //. Just for testing
+        // Just for testing
         this.cameras.main.setBackgroundColor('#040C06');
 
 
@@ -14,7 +22,7 @@ class Scene2 extends Phaser.Scene {
         this.foreground = this.add.image(this.cameras.main.width / 2, config.height - 210, 'foreground')
 
 
-        // Add player image for testing
+        // Add player sprite
         this.player = this.physics.add.sprite(config.width - 180, config.height - 200, 'player');
         this.player.play('player_idle');
 
@@ -24,11 +32,43 @@ class Scene2 extends Phaser.Scene {
         // Make variable to listen for cursor keys
         this.cursorKeys = this.input.keyboard.createCursorKeys();
 
+        //  Make variable to listen for space bar key so player can shoot
+        this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
+
+        this.rkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R)
+        //  keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        //  this.rKey = this.input.keyboard.addKey('R');
+
     }
 
     update() {
+
         // This function will control the players movement
         this.movePlayer();
+
+        // Shoot gun when spacebar is pressed
+        if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
+            if (this.player.active) {
+                this.shootGun();
+            }
+        }
+
+
+        // Reload gun when "r" key is pressed 
+        if (Phaser.Input.Keyboard.JustDown(this.rkey)) {
+            if (this.player.active) {
+                this.reloadGun();
+            }
+        }
+
+    }
+
+
+    // Set player to Idle
+    idlePlayer() {
+        this.player.setTexture('player');
+        this.player.play('player_idle');
     }
 
 
@@ -41,10 +81,10 @@ class Scene2 extends Phaser.Scene {
          * later to use a boolean 
          */
         const makePlayerWalk = () => {
-            if(this.player.texture.key === 'player') {
+            if (this.player.texture.key === 'player') {
                 this.player.setTexture('playerWalking');
                 this.player.play('player_walking');
-           }
+            }
         }
 
         /**
@@ -68,11 +108,70 @@ class Scene2 extends Phaser.Scene {
             makePlayerWalk()
         } else {
             this.player.setVelocityY(0)
-            if(this.player.texture.key === 'playerWalking') {
-                this.player.setTexture('player');
-                this.player.play('player_idle');
-           }
+            if (this.player.texture.key === 'playerWalking') {
+                this.idlePlayer();
+            }
         }
+    }
+
+
+    shootGun() {
+
+        /**
+         * Check if player shooting animation is already playing
+         * or the player is reloading. If so return (do nothing)
+         */
+        if (this.player.anims.getCurrentKey() === 'player_shooting' || this.state.reloading) {
+            return;
+        }
+
+
+        this.player.play('player_shooting');
+
+
+        /**
+        * If ammunition count is equal to 0 reload the gun and return
+        */
+        if (this.state.ammunition === 0) {
+            this.reloadGun();
+            return;
+        }
+
+
+        // subtract one from the ammunition count
+        if (this.state.ammunition > 0) {
+            this.state.ammunition--;
+            console.log(this.state.ammunition);
+        }
+
+
+        // After one second set player to idle
+        setTimeout(() => {
+            this.idlePlayer();
+        }, 1000);
+
+    }
+
+    reloadGun() {
+
+        /**
+        * Check if player shooting animation is already playing
+        * If so return (do nothing)
+        */
+        if (this.player.anims.getCurrentKey() === 'player_shooting') {
+            return;
+        }
+
+        // Play reloading animation 
+        this.player.play('player_reloading');
+
+        // Set ammunition count to 10
+        this.state.ammunition = 10;
+
+        // After one second set player to idle
+        setTimeout(() => {
+            this.idlePlayer();
+        }, 1000);
     }
 
 
