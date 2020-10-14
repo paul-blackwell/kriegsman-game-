@@ -18,6 +18,9 @@ class Scene2 extends Phaser.Scene {
         this.cameras.main.setBackgroundColor('#040C06');
 
 
+        // Add background
+        this.background = this.add.image(this.cameras.main.width / 2, config.height - 520, 'background');
+
         // Add foreground
         this.foreground = this.add.image(this.cameras.main.width / 2, config.height - 205, 'foreground');
 
