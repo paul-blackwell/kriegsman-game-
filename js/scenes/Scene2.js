@@ -24,6 +24,9 @@ class Scene2 extends Phaser.Scene {
         // Add foreground
         this.foreground = this.add.image(this.cameras.main.width / 2, config.height - 205, 'foreground');
 
+        // Add tank traps
+        this.tankTraps = this.add.image(this.cameras.main.width / 2, config.height - 205, 'tankTraps');
+
 
         // Add  sandbags
         this.sandbags = this.add.image(this.cameras.main.width - 300, config.height - 194, 'sandbags');

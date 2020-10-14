@@ -14,6 +14,9 @@ class Scene1 extends Phaser.Scene {
         this.load.image('foreground', 'assets/images/foreground.png');
 
 
+        // Image for tank traps
+        this.load.image('tankTraps', 'assets/images/tank-traps.png');
+
         // Image for Sandbags
         this.load.image('sandbags', 'assets/images/sandbags.png');
 
