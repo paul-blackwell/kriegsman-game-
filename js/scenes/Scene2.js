@@ -9,7 +9,6 @@ class Scene2 extends Phaser.Scene {
             ammunition: 5,
             grenades: 0,
             reloading: false,
-            enemyMoving: true,
         }
     }
 
@@ -54,23 +53,43 @@ class Scene2 extends Phaser.Scene {
         this.bullets = this.add.group();
 
 
-        // Add enemy idle sprite
-        this.enemy1 = this.physics.add.sprite(0, config.height - this.getRandomY(100, 320), 'enemyIdle');
-    
+        // Add enemy idle sprites
+        this.enemy1 = this.physics.add.sprite(0, config.height - this.getRandomY(280, 320), 'enemyIdle');
+        this.enemy2 = this.physics.add.sprite(0, config.height - this.getRandomY(180, 280), 'enemyIdle');
+        this.enemy3 = this.physics.add.sprite(0, config.height - this.getRandomY(100, 180), 'enemyIdle');
+
 
         this.enemy1.play('enemy_idle');
+        this.enemy2.play('enemy_idle');
+        this.enemy3.play('enemy_idle');
 
         // Make enemy interactive
         this.enemy1.setInteractive();
+        this.enemy2.setInteractive();
+        this.enemy3.setInteractive();
 
-       
+
         // Make enemies group
         this.enemies = this.physics.add.group();
         this.enemies.add(this.enemy1);
+        this.enemies.add(this.enemy2);
+        this.enemies.add(this.enemy3);
+
+
+        /**
+         * Loop over each enemy in the group and 
+         * set their health to 100
+         */
+        this.enemies.children.entries.forEach(enemy => {
+            enemy.health = 100;
+        });
 
 
         // Make enemies stop and attack when they get to the sandbags 
         this.physics.add.overlap(this.sandbags, this.enemies, this.enemyAttacking, null, this);
+
+        // Make bullets hurt enemies
+        this.physics.add.overlap(this.bullets, this.enemies, this.enemyHit, null, this);
 
     }
 
@@ -110,7 +129,10 @@ class Scene2 extends Phaser.Scene {
         }
 
 
+        // Move Enemy
         this.moveEnemy(this.enemy1, 3)
+        this.moveEnemy(this.enemy2, 4)
+        this.moveEnemy(this.enemy3, 2)
     }
 
 
@@ -195,6 +217,7 @@ class Scene2 extends Phaser.Scene {
         setTimeout(() => {
             // new Bullet(this);
             this.bullet()
+
         }, 500);
 
 
@@ -238,15 +261,20 @@ class Scene2 extends Phaser.Scene {
         const bullet = this.physics.add.sprite(x, y, 'bullet');
         bullet.play('bullet_anim');
 
+        bullet.setInteractive();
+
         bullet.body.velocity.x = -1000;
-        this.bullets.add(bullet)
-        console.log(this.bullets);
+        this.bullets.add(bullet);
     }
 
 
 
     moveEnemy(enemy, speed) {
-        if(this.state.enemyMoving === false){
+        /**
+         * If enemy  attacking brake out of function, 
+         * so stop moving
+         * */
+        if (enemy.anims.getCurrentKey() === 'enemy_attacking') {
             return;
         }
         enemy.x += speed;
@@ -254,37 +282,36 @@ class Scene2 extends Phaser.Scene {
 
 
 
-    // This will be used to set the start enemy positions
-    // getRandomY() {
-    //     const min = 100;
-    //     const max =  320;
-    //     return Math.floor(Math.random() * (max - min + 1)) + min;
-    // }
 
+    /**
+     * Title: getRandomY source code
+     * Author: Lior Elrom
+     * Date: 2020
+     * Code version: 1.0
+     * Availability: https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
+     * 
+     */
     // This will be used to set the start enemy positions
     getRandomY(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
 
-
     enemyAttacking(sandBags, enemy) {
 
-
         // If enemy is already attacking brake out of function
-        if(enemy.anims.getCurrentKey() === 'enemy_attacking') {
+        if (enemy.anims.getCurrentKey() === 'enemy_attacking') {
             return;
         }
 
         // stop enemy from moving
         this.state.enemyMoving = false;
 
-        console.log('Player stopped')
-        
+
         enemy.setTexture('enemyAttacking');
         enemy.play('enemy_attacking');
-      
-      
+
+
         /**
        * Check if enemy attacking animation is already playing
        * If so return (do nothing)
@@ -299,6 +326,23 @@ class Scene2 extends Phaser.Scene {
 
         //console.log(enemy)
         //console.log('Im attacking the sandbags')
+    }
+
+
+    
+
+
+    enemyHit(bullet, enemy) {
+
+        // Destroy bullet
+        bullet.destroy();
+
+        // Subtract  25% of enemy health 
+        enemy.health -= 25;
+
+        if (enemy.health < 0) {
+            
+        }
     }
 
 
