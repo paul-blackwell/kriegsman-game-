@@ -27,9 +27,16 @@ class Scene2 extends Phaser.Scene {
         // Add tank traps
         this.tankTraps = this.add.image(this.cameras.main.width / 2, config.height - 205, 'tankTraps');
 
+        // Just for testing
+        this.tankTraps = this.add.image(this.cameras.main.width / 2, config.height - 205, 'tankTraps');
+
 
         // Add  sandbags
         this.sandbags = this.add.image(this.cameras.main.width - 300, config.height - 194, 'sandbags');
+
+
+        // Just for testing
+        this.cultist = this.add.image(config.width - 600, config.height - 200, 'cultist');
 
 
         // Add player sprite

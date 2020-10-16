@@ -20,6 +20,8 @@ class Scene1 extends Phaser.Scene {
         // Image for Sandbags
         this.load.image('sandbags', 'assets/images/sandbags.png');
 
+        // Just for testing
+        this.load.image('cultist', 'assets/images/cultist.png');
 
         // Spitesheet for player Idle
         this.load.spritesheet('player', 'assets/spritesheets/krieg-guardsman-shritesheet.png', {
