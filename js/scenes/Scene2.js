@@ -18,7 +18,6 @@ class Scene2 extends Phaser.Scene {
         // Just for testing
         this.cameras.main.setBackgroundColor('#040C06');
 
-
         // Add background
         this.background = this.add.image(this.cameras.main.width / 2, config.height - 520, 'background');
 
@@ -56,7 +55,9 @@ class Scene2 extends Phaser.Scene {
 
 
         // Add enemy idle sprite
-        this.enemy1 = this.physics.add.sprite(0, config.height - 200, 'enemyIdle');
+        this.enemy1 = this.physics.add.sprite(0, config.height - this.getRandomY(100, 320), 'enemyIdle');
+    
+
         this.enemy1.play('enemy_idle');
 
         // Make enemy interactive
@@ -252,15 +253,38 @@ class Scene2 extends Phaser.Scene {
     }
 
 
+
+    // This will be used to set the start enemy positions
+    // getRandomY() {
+    //     const min = 100;
+    //     const max =  320;
+    //     return Math.floor(Math.random() * (max - min + 1)) + min;
+    // }
+
+    // This will be used to set the start enemy positions
+    getRandomY(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+
+
     enemyAttacking(sandBags, enemy) {
 
 
+        // If enemy is already attacking brake out of function
+        if(enemy.anims.getCurrentKey() === 'enemy_attacking') {
+            return;
+        }
+
         // stop enemy from moving
         this.state.enemyMoving = false;
-      
-        console.log(this.state.enemyMoving)
-      
 
+        console.log('Player stopped')
+        
+        enemy.setTexture('enemyAttacking');
+        enemy.play('enemy_attacking');
+      
+      
         /**
        * Check if enemy attacking animation is already playing
        * If so return (do nothing)
