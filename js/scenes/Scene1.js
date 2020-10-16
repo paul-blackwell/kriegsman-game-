@@ -41,8 +41,8 @@ class Scene1 extends Phaser.Scene {
             frameHeight: 192,
         });
 
-         // Spitesheet for player reloading
-         this.load.spritesheet('playerReloading', 'assets/spritesheets/krieg-guardsman-animated-reloading-sprite.png', {
+        // Spitesheet for player reloading
+        this.load.spritesheet('playerReloading', 'assets/spritesheets/krieg-guardsman-animated-reloading-sprite.png', {
             frameWidth: 192,
             frameHeight: 192,
         });
@@ -51,6 +51,18 @@ class Scene1 extends Phaser.Scene {
         this.load.spritesheet('bullet', 'assets/spritesheets/bullet-sprite.png', {
             frameWidth: 32,
             frameHeight: 32,
+        });
+
+        // Spritesheet for enemy Idle
+        this.load.spritesheet('enemyIdle', 'assets/spritesheets/cultist-animated-idle-sprite.png', {
+            frameWidth: 160,
+            frameHeight: 224,
+        });
+
+        // Spritesheet for enemy attacking
+        this.load.spritesheet('enemyAttacking', 'assets/spritesheets/cultist-animated-attacking-sprite.png', {
+            frameWidth: 160,
+            frameHeight: 224,
         });
     }
 
@@ -69,7 +81,7 @@ class Scene1 extends Phaser.Scene {
         // Animation of the player walking
         this.anims.create({
             key: 'player_walking',
-            frames: this.anims.generateFrameNumbers('playerWalking'), 
+            frames: this.anims.generateFrameNumbers('playerWalking'),
             frameRate: 16,
             repeat: -1
         });
@@ -78,22 +90,39 @@ class Scene1 extends Phaser.Scene {
         // Animation of the player Shooting 
         this.anims.create({
             key: 'player_shooting',
-            frames: this.anims.generateFrameNumbers('playerShooting'), 
+            frames: this.anims.generateFrameNumbers('playerShooting'),
             frameRate: 16,
         });
 
         // Animation of the player Shooting 
         this.anims.create({
             key: 'player_reloading',
-            frames: this.anims.generateFrameNumbers('playerReloading'), 
+            frames: this.anims.generateFrameNumbers('playerReloading'),
             frameRate: 16,
         });
 
         // Animation of the bullet in the air
         this.anims.create({
             key: 'bullet_anim',
-            frames: this.anims.generateFrameNumbers('bullet'), 
+            frames: this.anims.generateFrameNumbers('bullet'),
             frameRate: 16,
+            repeat: -1
+        });
+
+        // Animation of the enemy idle
+        this.anims.create({
+            key: 'enemy_idle',
+            frames: this.anims.generateFrameNumbers('enemyIdle'),
+            frameRate: 16,
+            repeat: -1
+        });
+
+        // Animation of the enemy attacking
+        this.anims.create({
+            key: 'enemy_attacking',
+            frames: this.anims.generateFrameNumbers('enemyAttacking'),
+            frameRate: 16,
+            repeat: -1
         });
     }
 

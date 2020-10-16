@@ -36,12 +36,13 @@ class Scene2 extends Phaser.Scene {
 
 
         // Just for testing
-        this.cultist = this.add.image(config.width - 600, config.height - 200, 'cultist');
+        //this.cultist = this.add.image(config.width - 600, config.height - 200, 'cultist');
 
 
         // Add player sprite
         this.player = this.physics.add.sprite(config.width - 180, config.height - 200, 'player');
         this.player.play('player_idle');
+
 
         // Stop player from going off the screen
         this.player.setCollideWorldBounds(true);
@@ -56,8 +57,13 @@ class Scene2 extends Phaser.Scene {
         this.rkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
 
-         // This will hold all the 'bullet' Instances in the scene 
-         this.bullets = this.add.group()
+        // This will hold all the 'bullet' Instances in the scene 
+        this.bullets = this.add.group();
+
+
+        // Add enemy idle sprite
+        this.enemy = this.physics.add.sprite(config.width - 180, config.height - 200, 'enemyIdle');
+        this.enemy.play('enemy_idle');
 
     }
 
@@ -90,13 +96,13 @@ class Scene2 extends Phaser.Scene {
          */
         for (let i = 0; i < this.bullets.getChildren().length; i++) {
             const bullet = this.bullets.getChildren()[i];
-            if(bullet.x < 50) {
+            if (bullet.x < 50) {
                 bullet.destroy()
                 //bullet.body.velocity.x = 0;
             }
         }
 
-       
+
 
     }
 
@@ -178,7 +184,7 @@ class Scene2 extends Phaser.Scene {
         // Play shooting animation 
         this.player.play('player_shooting');
 
-        
+
         // Fire bullet but only after 500 milliseconds
         setTimeout(() => {
             // new Bullet(this);
@@ -222,13 +228,13 @@ class Scene2 extends Phaser.Scene {
         const x = this.player.x - 60;
         const y = this.player.y - 45;
 
-         // Add player sprite
-         const bullet = this.physics.add.sprite(x, y, 'bullet');
-         bullet.play('bullet_anim');
+        // Add player sprite
+        const bullet = this.physics.add.sprite(x, y, 'bullet');
+        bullet.play('bullet_anim');
 
-         bullet.body.velocity.x = -1000;
-         this.bullets.add(bullet)
-         console.log(this.bullets);
+        bullet.body.velocity.x = -1000;
+        this.bullets.add(bullet)
+        console.log(this.bullets);
     }
 
 
