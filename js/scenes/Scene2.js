@@ -8,7 +8,8 @@ class Scene2 extends Phaser.Scene {
             gameOver: false,
             ammunition: 5,
             grenades: 0,
-            reloading: false
+            reloading: false,
+            enemyMoving: true,
         }
     }
 
@@ -27,16 +28,9 @@ class Scene2 extends Phaser.Scene {
         // Add tank traps
         this.tankTraps = this.add.image(this.cameras.main.width / 2, config.height - 205, 'tankTraps');
 
-        // Just for testing
-        this.tankTraps = this.add.image(this.cameras.main.width / 2, config.height - 205, 'tankTraps');
-
 
         // Add  sandbags
-        this.sandbags = this.add.image(this.cameras.main.width - 300, config.height - 194, 'sandbags');
-
-
-        // Just for testing
-        //this.cultist = this.add.image(config.width - 600, config.height - 200, 'cultist');
+        this.sandbags = this.physics.add.image(this.cameras.main.width - 300, config.height - 194, 'sandbags');
 
 
         // Add player sprite
@@ -62,8 +56,20 @@ class Scene2 extends Phaser.Scene {
 
 
         // Add enemy idle sprite
-        this.enemy = this.physics.add.sprite(config.width - 180, config.height - 200, 'enemyIdle');
-        this.enemy.play('enemy_idle');
+        this.enemy1 = this.physics.add.sprite(0, config.height - 200, 'enemyIdle');
+        this.enemy1.play('enemy_idle');
+
+        // Make enemy interactive
+        this.enemy1.setInteractive();
+
+       
+        // Make enemies group
+        this.enemies = this.physics.add.group();
+        this.enemies.add(this.enemy1);
+
+
+        // Make enemies stop and attack when they get to the sandbags 
+        this.physics.add.overlap(this.sandbags, this.enemies, this.enemyAttacking, null, this);
 
     }
 
@@ -103,7 +109,7 @@ class Scene2 extends Phaser.Scene {
         }
 
 
-
+        this.moveEnemy(this.enemy1, 3)
     }
 
 
@@ -115,7 +121,6 @@ class Scene2 extends Phaser.Scene {
 
 
     movePlayer() {
-
 
         /**
          * This will change the player texture to a
@@ -237,6 +242,40 @@ class Scene2 extends Phaser.Scene {
         console.log(this.bullets);
     }
 
+
+
+    moveEnemy(enemy, speed) {
+        if(this.state.enemyMoving === false){
+            return;
+        }
+        enemy.x += speed;
+    }
+
+
+    enemyAttacking(sandBags, enemy) {
+
+
+        // stop enemy from moving
+        this.state.enemyMoving = false;
+      
+        console.log(this.state.enemyMoving)
+      
+
+        /**
+       * Check if enemy attacking animation is already playing
+       * If so return (do nothing)
+       */
+        // if (enemy.anims.getCurrentKey() === 'enemy_attacking') {
+        //     return;
+        // }
+
+
+        // enemy.setTexture('enemyAttacking');
+        // enemy.player.play('enemy_attacking');
+
+        //console.log(enemy)
+        //console.log('Im attacking the sandbags')
+    }
 
 
 }
