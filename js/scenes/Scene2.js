@@ -14,6 +14,7 @@ class Scene2 extends Phaser.Scene {
 
     create() {
 
+
         // Just for testing
         this.cameras.main.setBackgroundColor('#040C06');
 
@@ -63,10 +64,17 @@ class Scene2 extends Phaser.Scene {
         this.enemy2.play('enemy_idle');
         this.enemy3.play('enemy_idle');
 
+
+        // Show hitbox just for testing
+        //this.game.debug.body(this.enemy1);
+
+
+
         // Make enemy interactive
         this.enemy1.setInteractive();
         this.enemy2.setInteractive();
         this.enemy3.setInteractive();
+
 
 
         // Make enemies group
@@ -206,7 +214,6 @@ class Scene2 extends Phaser.Scene {
         // subtract one from the ammunition count
         if (this.state.ammunition > 0) {
             this.state.ammunition--;
-            console.log(this.state.ammunition);
         }
 
         // Play shooting animation 
@@ -217,7 +224,6 @@ class Scene2 extends Phaser.Scene {
         setTimeout(() => {
             // new Bullet(this);
             this.bullet()
-
         }, 500);
 
 
@@ -297,6 +303,7 @@ class Scene2 extends Phaser.Scene {
     }
 
 
+
     enemyAttacking(sandBags, enemy) {
 
         // If enemy is already attacking brake out of function
@@ -311,25 +318,9 @@ class Scene2 extends Phaser.Scene {
         enemy.setTexture('enemyAttacking');
         enemy.play('enemy_attacking');
 
-
-        /**
-       * Check if enemy attacking animation is already playing
-       * If so return (do nothing)
-       */
-        // if (enemy.anims.getCurrentKey() === 'enemy_attacking') {
-        //     return;
-        // }
-
-
-        // enemy.setTexture('enemyAttacking');
-        // enemy.player.play('enemy_attacking');
-
-        //console.log(enemy)
-        //console.log('Im attacking the sandbags')
     }
 
 
-    
 
 
     enemyHit(bullet, enemy) {
@@ -337,13 +328,57 @@ class Scene2 extends Phaser.Scene {
         // Destroy bullet
         bullet.destroy();
 
-        // Subtract  25% of enemy health 
-        enemy.health -= 25;
+        enemy.alpha = 0;
 
-        if (enemy.health < 0) {
-            
+        setTimeout(() => {
+            enemy.alpha = 1;
+        }, 50);
+
+         
+        // Subtract  25% of enemy health 
+        enemy.health -= 100;
+
+        if (enemy.health <= 0) {
+            this.enemyRespawn(enemy);
         }
     }
 
+
+    enemyRespawn(enemy) {
+
+        // Set health to 100%
+        enemy.health = 100;
+
+
+        // Reset enemy position
+        enemy.x = -100;
+        enemy.y = config.height - this.getRandomY(280, 320);
+       
+        
+        /**
+         * This will change the sprite to the idle one and
+         * the moveEnemy method in update will automatically 
+         * the enemy move
+         */
+        setTimeout(() => {
+            enemy.setTexture('enemyIdle');
+            enemy.play('enemy_idle');
+        }, 1000);
+    
+
+
+    }
+
+
+    // render() {
+
+    //     console.log(game.debug)
+
+    //     game.debug.bodyInfo(this.enemy1, 32, 32);
+    
+    //     // game.debug.body(sprite1);
+    //     // game.debug.body(sprite2);
+    
+    // }
 
 }
