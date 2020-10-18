@@ -55,9 +55,9 @@ class Scene2 extends Phaser.Scene {
 
 
         // Add enemy running sprites
-        this.enemy1 = this.physics.add.sprite(0, this.getRandomY(250, 300), 'enemyRunning');
-        this.enemy2 = this.physics.add.sprite(0, this.getRandomY(350, 400), 'enemyRunning');
-        this.enemy3 = this.physics.add.sprite(0, this.getRandomY(450, 550), 'enemyRunning');
+        this.enemy1 = this.physics.add.sprite(0, this.getRandomNumber(250, 300), 'enemyRunning');
+        this.enemy2 = this.physics.add.sprite(0, this.getRandomNumber(350, 400), 'enemyRunning');
+        this.enemy3 = this.physics.add.sprite(0, this.getRandomNumber(450, 550), 'enemyRunning');
 
 
         // Change  bounding box size of enemies
@@ -89,11 +89,11 @@ class Scene2 extends Phaser.Scene {
 
         /**
          * Loop over each enemy in the group and 
-         * set their health to 100 and add their index
-         * as we will need this when they respawn 
+         * set their health to 100 and add their speed 
          */
         this.enemies.children.entries.forEach(enemy => {
             enemy.health = 100;
+            enemy.speed = this.getRandomNumber(1,6);
         });
 
 
@@ -144,10 +144,10 @@ class Scene2 extends Phaser.Scene {
         }
 
 
-        // Move Enemy
-        this.moveEnemy(this.enemy1, 3)
-        this.moveEnemy(this.enemy2, 4)
-        this.moveEnemy(this.enemy3, 2)
+        // Move Enemies 
+        this.enemies.children.entries.forEach(enemy => {
+            this.moveEnemy(enemy, enemy.speed)
+        });
     }
 
 
@@ -297,7 +297,7 @@ class Scene2 extends Phaser.Scene {
 
 
     /**
-     * Title: getRandomY source code
+     * Title: getRandomNumber source code
      * Author: Lior Elrom
      * Date: 2020
      * Code version: 1.0
@@ -305,7 +305,7 @@ class Scene2 extends Phaser.Scene {
      * 
      */
     // This will be used to set the start enemy positions
-    getRandomY(min, max) {
+    getRandomNumber(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
@@ -327,6 +327,7 @@ class Scene2 extends Phaser.Scene {
 
 
     enemyHit(bullet, enemy) {
+
 
         // Destroy bullet
         bullet.destroy();
@@ -381,6 +382,8 @@ class Scene2 extends Phaser.Scene {
 
     enemyRespawn(enemy) {
 
+        // Reset enemy speed
+        enemy.speed = this.getRandomNumber(1, 6)
 
         // Set alpha to 1 so we can see the enemy 
         const timeline = this.tweens.createTimeline();
@@ -402,11 +405,11 @@ class Scene2 extends Phaser.Scene {
          */
         enemy.x = -100;
         if (enemy.y <= 300) {
-            enemy.y = this.getRandomY(250, 300);
+            enemy.y = this.getRandomNumber(250, 300);
         } else if (enemy.y <= 400) {
-            enemy.y = this.getRandomY(350, 400);
+            enemy.y = this.getRandomNumber(350, 400);
         } else {
-            enemy.y = this.getRandomY(450, 550);
+            enemy.y = this.getRandomNumber(450, 550);
         }
 
         /**
