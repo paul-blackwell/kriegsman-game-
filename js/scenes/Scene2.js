@@ -9,12 +9,13 @@ class Scene2 extends Phaser.Scene {
             ammunition: 5,
             grenades: 0,
             reloading: false,
+            sandbags: 100
         }
     }
 
     create() {
 
-    
+
         // Just for testing
         this.cameras.main.setBackgroundColor('#040C06');
 
@@ -93,7 +94,7 @@ class Scene2 extends Phaser.Scene {
          */
         this.enemies.children.entries.forEach(enemy => {
             enemy.health = 100;
-            enemy.speed = this.getRandomNumber(1,6);
+            enemy.speed = this.getRandomNumber(1, 6);
         });
 
 
@@ -148,6 +149,7 @@ class Scene2 extends Phaser.Scene {
         this.enemies.children.entries.forEach(enemy => {
             this.moveEnemy(enemy, enemy.speed)
         });
+
     }
 
 
@@ -239,6 +241,8 @@ class Scene2 extends Phaser.Scene {
             this.idlePlayer();
         }, 1000);
 
+
+
     }
 
     reloadGun() {
@@ -295,7 +299,6 @@ class Scene2 extends Phaser.Scene {
 
 
 
-
     /**
      * Title: getRandomNumber source code
      * Author: Lior Elrom
@@ -321,6 +324,11 @@ class Scene2 extends Phaser.Scene {
         enemy.setTexture('enemyAttacking');
         enemy.play('enemy_attacking');
 
+
+        // Every 3 seconds
+        setInterval(() => {
+            this.damageSandbags(sandBags);
+        }, 3000)
     }
 
 
@@ -328,20 +336,16 @@ class Scene2 extends Phaser.Scene {
 
     enemyHit(bullet, enemy) {
 
-
         // Destroy bullet
         bullet.destroy();
-
 
         // Add to playerScore
         this.state.score += 50;
 
 
-
         // Change sprite 
         enemy.setTexture('enemyShotChest');
         enemy.play('enemy_shotChest');
-
 
         // Add fadeout 
         const timeline = this.tweens.createTimeline();
@@ -368,7 +372,6 @@ class Scene2 extends Phaser.Scene {
 
         timeline.play();
 
-
         // Subtract  25% of enemy health 
         enemy.health -= 100;
 
@@ -394,7 +397,7 @@ class Scene2 extends Phaser.Scene {
             duration: 50
         });
         timeline.play();
-        
+
 
         // Set health to 100%
         enemy.health = 100;
@@ -424,16 +427,24 @@ class Scene2 extends Phaser.Scene {
 
     }
 
+    damageSandbags(sandBags) {
 
-    // render() {
 
-    //     console.log(game.debug)
-
-    //     game.debug.bodyInfo(this.enemy1, 32, 32);
-
-    //     // game.debug.body(sprite1);
-    //     // game.debug.body(sprite2);
-
-    // }
+        // Subtract 10 from the sandbag state health
+        if(this.state.sandbags > 0){
+            this.state.sandbags -= 10;
+        }
+        
+        // Update texture 
+        if (this.state.sandbags < 100 && this.state.sandbags >= 80 && sandBags.texture.key !== 'sandbags80') {
+            sandBags.setTexture('sandbags80');
+        } else if (this.state.sandbags < 80 && this.state.sandbags >= 60 && sandBags.texture.key !== 'sandbags60') {
+            sandBags.setTexture('sandbags60');
+        }else if(this.state.sandbags < 60 && this.state.sandbags >= 40 && sandBags.texture.key !== 'sandbags40') {
+            sandBags.setTexture('sandbags40');
+        } else if (this.state.sandbags < 40 && this.state.sandbags >= 20 && sandBags.texture.key !== 'sandbags20') {
+            sandBags.setTexture('sandbags20');
+        }
+    }
 
 }

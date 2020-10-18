@@ -8,8 +8,8 @@ Things to do:
 - [x] Change sizes of hit boxes 
 - [x] Add run animation to the enemies 
 - [x] Make enemies respawn on the same plane
-- [ ] Add blood to enemies when they get hit 
-- [ ] Add player score
+- [x] Add blood to enemies when they get hit 
+- [x] Add player score
 - [ ] Add high score
 - [ ] Output scores
 - [ ] Add sandbag health
