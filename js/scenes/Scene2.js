@@ -54,15 +54,13 @@ class Scene2 extends Phaser.Scene {
         this.bullets = this.add.group();
 
 
-        // Add enemy idle sprites
-        this.enemy1 = this.physics.add.sprite(0, config.height - this.getRandomY(280, 320), 'enemyIdle');
-        this.enemy2 = this.physics.add.sprite(0, config.height - this.getRandomY(180, 280), 'enemyIdle');
-        this.enemy3 = this.physics.add.sprite(0, config.height - this.getRandomY(100, 180), 'enemyIdle');
-
-
-        this.enemy1.play('enemy_idle');
-        this.enemy2.play('enemy_idle');
-        this.enemy3.play('enemy_idle');
+        // Add enemy running sprites
+        this.enemy1 = this.physics.add.sprite(0, config.height - this.getRandomY(280, 320), 'enemyRunning');
+        this.enemy2 = this.physics.add.sprite(0, config.height - this.getRandomY(180, 280), 'enemyRunning');
+        this.enemy3 = this.physics.add.sprite(0, config.height - this.getRandomY(100, 180), 'enemyRunning');
+        this.enemy1.play('enemy_running');
+        this.enemy2.play('enemy_running');
+        this.enemy3.play('enemy_running');
 
 
         // Show hitbox just for testing

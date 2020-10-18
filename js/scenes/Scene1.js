@@ -59,6 +59,12 @@ class Scene1 extends Phaser.Scene {
             frameHeight: 224,
         });
 
+         // Spritesheet for enemy running
+         this.load.spritesheet('enemyRunning', 'assets/spritesheets/cultist-animated-running-sprite.png', {
+            frameWidth: 160,
+            frameHeight: 224,
+        });
+
         // Spritesheet for enemy attacking
         this.load.spritesheet('enemyAttacking', 'assets/spritesheets/cultist-animated-attacking-sprite.png', {
             frameWidth: 160,
@@ -113,6 +119,14 @@ class Scene1 extends Phaser.Scene {
         this.anims.create({
             key: 'enemy_idle',
             frames: this.anims.generateFrameNumbers('enemyIdle'),
+            frameRate: 16,
+            repeat: -1
+        });
+
+          // Animation of the enemy running
+          this.anims.create({
+            key: 'enemy_running',
+            frames: this.anims.generateFrameNumbers('enemyRunning'),
             frameRate: 16,
             repeat: -1
         });
