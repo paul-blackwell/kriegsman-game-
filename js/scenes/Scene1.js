@@ -70,6 +70,7 @@ class Scene1 extends Phaser.Scene {
             frameWidth: 160,
             frameHeight: 224,
         });
+
     }
 
     create() {

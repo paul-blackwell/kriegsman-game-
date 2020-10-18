@@ -58,15 +58,20 @@ class Scene2 extends Phaser.Scene {
         this.enemy1 = this.physics.add.sprite(0, this.getRandomY(250, 300), 'enemyRunning');
         this.enemy2 = this.physics.add.sprite(0, this.getRandomY(350, 400), 'enemyRunning');
         this.enemy3 = this.physics.add.sprite(0, this.getRandomY(450, 550), 'enemyRunning');
+
+
+        // Change  bounding box size of enemies
+        this.enemy1.body.setSize(70, 140, true);
+        this.enemy2.body.setSize(70, 140, true);
+        this.enemy3.body.setSize(70, 140, true);
+        
+
         this.enemy1.play('enemy_running');
         this.enemy2.play('enemy_running');
         this.enemy3.play('enemy_running');
 
 
-        // Show hitbox just for testing
-        //this.game.debug.body(this.enemy1);
-
-
+    
 
         // Make enemy interactive
         this.enemy1.setInteractive();
@@ -94,6 +99,9 @@ class Scene2 extends Phaser.Scene {
 
         // Make enemies stop and attack when they get to the sandbags 
         this.physics.add.overlap(this.sandbags, this.enemies, this.enemyAttacking, null, this);
+
+         // Change bounding box size of sandbags
+         this.sandbags.body.setSize(200, this.sandbags.height, true);
 
         // Make bullets hurt enemies
         this.physics.add.overlap(this.bullets, this.enemies, this.enemyHit, null, this);
