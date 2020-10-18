@@ -332,6 +332,11 @@ class Scene2 extends Phaser.Scene {
         bullet.destroy();
 
 
+        // Add to playerScore
+        this.state.score += 50;
+
+
+
         // Change sprite 
         enemy.setTexture('enemyShotChest');
         enemy.play('enemy_shotChest');
