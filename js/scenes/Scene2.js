@@ -14,7 +14,7 @@ class Scene2 extends Phaser.Scene {
 
     create() {
 
-
+    
         // Just for testing
         this.cameras.main.setBackgroundColor('#040C06');
 
@@ -64,14 +64,14 @@ class Scene2 extends Phaser.Scene {
         this.enemy1.body.setSize(70, 140, true);
         this.enemy2.body.setSize(70, 140, true);
         this.enemy3.body.setSize(70, 140, true);
-        
+
 
         this.enemy1.play('enemy_running');
         this.enemy2.play('enemy_running');
         this.enemy3.play('enemy_running');
 
 
-    
+
 
         // Make enemy interactive
         this.enemy1.setInteractive();
@@ -100,8 +100,8 @@ class Scene2 extends Phaser.Scene {
         // Make enemies stop and attack when they get to the sandbags 
         this.physics.add.overlap(this.sandbags, this.enemies, this.enemyAttacking, null, this);
 
-         // Change bounding box size of sandbags
-         this.sandbags.body.setSize(200, this.sandbags.height, true);
+        // Change bounding box size of sandbags
+        this.sandbags.body.setSize(200, this.sandbags.height, true);
 
         // Make bullets hurt enemies
         this.physics.add.overlap(this.bullets, this.enemies, this.enemyHit, null, this);
@@ -287,7 +287,7 @@ class Scene2 extends Phaser.Scene {
          * If enemy  attacking brake out of function, 
          * so stop moving
          * */
-        if (enemy.anims.getCurrentKey() === 'enemy_attacking') {
+        if (enemy.anims.getCurrentKey() !== 'enemy_running') {
             return;
         }
         enemy.x += speed;
@@ -313,14 +313,10 @@ class Scene2 extends Phaser.Scene {
 
     enemyAttacking(sandBags, enemy) {
 
-        // If enemy is already attacking brake out of function
-        if (enemy.anims.getCurrentKey() === 'enemy_attacking') {
+        // If enemy is already attacking brake or is hit out of function
+        if (enemy.anims.getCurrentKey() === 'enemy_attacking' || enemy.anims.getCurrentKey() === 'enemy_shotChest') {
             return;
         }
-
-        // stop enemy from moving
-        this.state.enemyMoving = false;
-
 
         enemy.setTexture('enemyAttacking');
         enemy.play('enemy_attacking');
@@ -335,34 +331,72 @@ class Scene2 extends Phaser.Scene {
         // Destroy bullet
         bullet.destroy();
 
-        enemy.alpha = 0;
 
-        setTimeout(() => {
-            enemy.alpha = 1;
-        }, 50);
+        // Change sprite 
+        enemy.setTexture('enemyShotChest');
+        enemy.play('enemy_shotChest');
 
-         
+
+        // Add fadeout 
+        const timeline = this.tweens.createTimeline();
+
+        timeline.add({
+            targets: enemy,
+            alpha: 0,
+            ease: 'Power1',
+            duration: 50
+        });
+        timeline.add({
+            targets: enemy,
+            alpha: 1,
+            ease: 'Power1',
+            duration: 50
+        });
+
+        timeline.add({
+            targets: enemy,
+            alpha: 0,
+            ease: 'Power1',
+            duration: 1000
+        });
+
+        timeline.play();
+
+
         // Subtract  25% of enemy health 
         enemy.health -= 100;
 
         if (enemy.health <= 0) {
-            this.enemyRespawn(enemy);
+            setTimeout(() => {
+                this.enemyRespawn(enemy);
+            }, 1100);
         }
     }
 
 
     enemyRespawn(enemy) {
 
+
+        // Set alpha to 1 so we can see the enemy 
+        const timeline = this.tweens.createTimeline();
+        timeline.add({
+            targets: enemy,
+            alpha: 1,
+            ease: 'Power1',
+            duration: 50
+        });
+        timeline.play();
+        
+
         // Set health to 100%
         enemy.health = 100;
-
 
         /**
          * Reset enemy position but check their Y position
          * as we don't want them overlapping when they respawn
          */
         enemy.x = -100;
-        if(enemy.y <= 300 ) {
+        if (enemy.y <= 300) {
             enemy.y = this.getRandomY(250, 300);
         } else if (enemy.y <= 400) {
             enemy.y = this.getRandomY(350, 400);
@@ -370,7 +404,6 @@ class Scene2 extends Phaser.Scene {
             enemy.y = this.getRandomY(450, 550);
         }
 
-        
         /**
          * This will change the sprite to the running one and
          * the moveEnemy method in update will automatically 
@@ -380,7 +413,7 @@ class Scene2 extends Phaser.Scene {
             enemy.setTexture('enemyRunning');
             enemy.play('enemy_running');
         }, 1000);
-    
+
     }
 
 
@@ -389,10 +422,10 @@ class Scene2 extends Phaser.Scene {
     //     console.log(game.debug)
 
     //     game.debug.bodyInfo(this.enemy1, 32, 32);
-    
+
     //     // game.debug.body(sprite1);
     //     // game.debug.body(sprite2);
-    
+
     // }
 
 }

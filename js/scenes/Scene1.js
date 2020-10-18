@@ -71,6 +71,12 @@ class Scene1 extends Phaser.Scene {
             frameHeight: 224,
         });
 
+        // Spritesheet for enemy shot in chest
+        this.load.spritesheet('enemyShotChest', 'assets/spritesheets/cultist-animated-shot-in-chest-sprite.png', {
+            frameWidth: 160,
+            frameHeight: 224,
+        });
+
     }
 
     create() {
@@ -138,6 +144,13 @@ class Scene1 extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('enemyAttacking'),
             frameRate: 16,
             repeat: -1
+        });
+
+        // Animation of the enemy shot in chest
+        this.anims.create({
+            key: 'enemy_shotChest',
+            frames: this.anims.generateFrameNumbers('enemyShotChest'),
+            frameRate: 16,
         });
     }
 
