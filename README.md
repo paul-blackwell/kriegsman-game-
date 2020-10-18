@@ -6,7 +6,8 @@ This is my game for CI328-CI587 - Internet game design and development, it’s l
 Things to do:
 
 - [ ] Change sizes of hit boxes 
-- [ ] Add run animation to the enemies 
+- [x] Add run animation to the enemies 
+- [x] Make enemies respawn on the same plane
 - [ ] Add blood to enemies when they get hit 
 - [ ] Add player score
 - [ ] Add high score

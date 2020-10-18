@@ -55,9 +55,9 @@ class Scene2 extends Phaser.Scene {
 
 
         // Add enemy running sprites
-        this.enemy1 = this.physics.add.sprite(0, config.height - this.getRandomY(280, 320), 'enemyRunning');
-        this.enemy2 = this.physics.add.sprite(0, config.height - this.getRandomY(180, 280), 'enemyRunning');
-        this.enemy3 = this.physics.add.sprite(0, config.height - this.getRandomY(100, 180), 'enemyRunning');
+        this.enemy1 = this.physics.add.sprite(0, this.getRandomY(250, 300), 'enemyRunning');
+        this.enemy2 = this.physics.add.sprite(0, this.getRandomY(350, 400), 'enemyRunning');
+        this.enemy3 = this.physics.add.sprite(0, this.getRandomY(450, 550), 'enemyRunning');
         this.enemy1.play('enemy_running');
         this.enemy2.play('enemy_running');
         this.enemy3.play('enemy_running');
@@ -84,7 +84,8 @@ class Scene2 extends Phaser.Scene {
 
         /**
          * Loop over each enemy in the group and 
-         * set their health to 100
+         * set their health to 100 and add their index
+         * as we will need this when they respawn 
          */
         this.enemies.children.entries.forEach(enemy => {
             enemy.health = 100;
@@ -348,23 +349,30 @@ class Scene2 extends Phaser.Scene {
         enemy.health = 100;
 
 
-        // Reset enemy position
+        /**
+         * Reset enemy position but check their Y position
+         * as we don't want them overlapping when they respawn
+         */
         enemy.x = -100;
-        enemy.y = config.height - this.getRandomY(280, 320);
-       
+        if(enemy.y <= 300 ) {
+            enemy.y = this.getRandomY(250, 300);
+        } else if (enemy.y <= 400) {
+            enemy.y = this.getRandomY(350, 400);
+        } else {
+            enemy.y = this.getRandomY(450, 550);
+        }
+
         
         /**
-         * This will change the sprite to the idle one and
+         * This will change the sprite to the running one and
          * the moveEnemy method in update will automatically 
          * the enemy move
          */
         setTimeout(() => {
-            enemy.setTexture('enemyIdle');
-            enemy.play('enemy_idle');
+            enemy.setTexture('enemyRunning');
+            enemy.play('enemy_running');
         }, 1000);
     
-
-
     }
 
 
