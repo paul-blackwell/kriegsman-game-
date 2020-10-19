@@ -24,8 +24,10 @@ class Scene1 extends Phaser.Scene {
         this.load.image('sandbags40', 'assets/images/sandbags-40.png');
         this.load.image('sandbags20', 'assets/images/sandbags-20.png');
 
-    
+        // Image for terminals
+        this.load.image('terminal', 'assets/images/terminal.png');
 
+    
         // Spitesheet for player Idle
         this.load.spritesheet('player', 'assets/spritesheets/krieg-guardsman-shritesheet.png', {
             frameWidth: 160,

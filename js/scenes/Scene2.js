@@ -28,10 +28,11 @@ class Scene2 extends Phaser.Scene {
         // Add tank traps
         this.tankTraps = this.add.image(this.cameras.main.width / 2, config.height - 205, 'tankTraps');
 
-
         // Add  sandbags
         this.sandbags = this.physics.add.image(this.cameras.main.width - 300, config.height - 194, 'sandbags');
 
+        // Add terminal
+        this.terminal = this.add.image(this.cameras.main.width - 250  , 35, 'terminal');
 
         // Add player sprite
         this.player = this.physics.add.sprite(config.width - 180, config.height - 200, 'player');
@@ -59,18 +60,15 @@ class Scene2 extends Phaser.Scene {
         this.enemy1 = this.physics.add.sprite(0, this.getRandomNumber(250, 300), 'enemyRunning');
         this.enemy2 = this.physics.add.sprite(0, this.getRandomNumber(350, 400), 'enemyRunning');
         this.enemy3 = this.physics.add.sprite(0, this.getRandomNumber(450, 550), 'enemyRunning');
+        this.enemy1.play('enemy_running');
+        this.enemy2.play('enemy_running');
+        this.enemy3.play('enemy_running');
 
 
         // Change  bounding box size of enemies
         this.enemy1.body.setSize(70, 140, true);
         this.enemy2.body.setSize(70, 140, true);
         this.enemy3.body.setSize(70, 140, true);
-
-
-        this.enemy1.play('enemy_running');
-        this.enemy2.play('enemy_running');
-        this.enemy3.play('enemy_running');
-
 
 
 
@@ -90,11 +88,14 @@ class Scene2 extends Phaser.Scene {
 
         /**
          * Loop over each enemy in the group and 
-         * set their health to 100 and add their speed 
+         * set their health to 100 and add their speed,
+         * also set attacking state as we will need this 
+         * in the damageSandbags function
          */
         this.enemies.children.entries.forEach(enemy => {
             enemy.health = 100;
             enemy.speed = this.getRandomNumber(1, 6);
+            enemy.attacking = false;
         });
 
 
@@ -316,6 +317,9 @@ class Scene2 extends Phaser.Scene {
 
     enemyAttacking(sandBags, enemy) {
 
+         // Set attacking to true
+        enemy.attacking = true;
+
         // If enemy is already attacking brake or is hit out of function
         if (enemy.anims.getCurrentKey() === 'enemy_attacking' || enemy.anims.getCurrentKey() === 'enemy_shotChest') {
             return;
@@ -327,8 +331,12 @@ class Scene2 extends Phaser.Scene {
 
         // Every 3 seconds
         setInterval(() => {
-            this.damageSandbags(sandBags);
-        }, 3000)
+            /**
+             * Check if enemy is attacking, we need to do this
+             * as this function will keep running in the background
+             */
+            if(enemy.attacking) this.damageSandbags(sandBags);
+        }, 1000)
     }
 
 
@@ -385,6 +393,9 @@ class Scene2 extends Phaser.Scene {
 
     enemyRespawn(enemy) {
 
+        // Set attacking to false
+        enemy.attacking = false;
+
         // Reset enemy speed
         enemy.speed = this.getRandomNumber(1, 6)
 
@@ -428,7 +439,6 @@ class Scene2 extends Phaser.Scene {
     }
 
     damageSandbags(sandBags) {
-
 
         // Subtract 10 from the sandbag state health
         if(this.state.sandbags > 0){
