@@ -28,7 +28,7 @@ class Scene2 extends Phaser.Scene {
         // Add tank traps
         this.tankTraps = this.add.image(this.cameras.main.width / 2, config.height - 205, 'tankTraps');
 
-        // Add  sandbags
+        // Add sandbags
         this.sandbags = this.physics.add.image(this.cameras.main.width - 300, config.height - 194, 'sandbags');
 
         // Add terminal
@@ -327,7 +327,7 @@ class Scene2 extends Phaser.Scene {
 
         enemy.setTexture('enemyAttacking');
         enemy.play('enemy_attacking');
-
+        
 
         // Every 3 seconds
         setInterval(() => {

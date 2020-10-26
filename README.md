@@ -11,7 +11,10 @@ Things to do:
 - [x] Add blood to enemies when they get hit 
 - [x] Add player score
 - [ ] Add high score
-- [ ] Output scores
-- [ ] Add sandbag health
-- [ ] Add sandbag damage 
-- [ ] Fix tank traps 
+- [ ] Output scores / make GUI for that
+- [x] Add sandbag health
+- [x] Add sandbag damage 
+- [ ] End game when sandbags have no health
+- [ ] Add audio (enemies dieing, gun shooting, enemies firing)
+- [ ] Fix tank traps
+- [ ] Add game levels (easy, hard) add more enemies
