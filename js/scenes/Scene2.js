@@ -260,7 +260,7 @@ class Scene2 extends Phaser.Scene {
         this.player.play('player_reloading');
         this.state.reloading = true;
 
-        // Set ammunition count to 10
+        // Set ammunition count to 5
         this.state.ammunition = 5;
 
         // After one second set player to idle
