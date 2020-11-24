@@ -23,9 +23,10 @@ export default class Scene1 extends Phaser.Scene {
 
         this.text = this.add.text(100, 100, 'Select difficulty:', { fill: '#0f0' });
 
+
         const difficultyButton = this.add.text(100, 140, 'Easy', { fill: '#0f0' });
         difficultyButton.setInteractive();
-        difficultyButton.on('pointerdown', () => this.scene.start('playGame'));
+        difficultyButton.on('pointerdown', () => this.scene.start('playGame', {difficulty: 'easy'}));
 
         console.log(difficultyButton)
     }

@@ -8,6 +8,12 @@ export default class Scene2 extends Phaser.Scene {
         super('playGame');
     }
 
+    init(data){
+
+        // Get difficulty from scene one
+        this.difficulty = data.difficulty;
+    }
+
     create() {
         // Add background
         this.background = this.add.image(this.cameras.main.width / 2, config.height - 520, 'background');
