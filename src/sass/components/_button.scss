@@ -1,0 +1,25 @@
+.btn {
+
+    &, &:link, &:visited {
+        
+    }
+    
+    
+    &:hover {
+       
+        &::after {
+           
+        }
+    }
+    
+    &:active, &:focus {
+        
+    }
+    
+
+    &::after {
+       
+    }
+
+}
+

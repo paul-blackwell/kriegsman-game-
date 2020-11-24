@@ -1,3 +1,6 @@
+import Scene1 from '../scenes/Scene1';
+import Scene2 from '../scenes/Scene2';
+
 const config = {
     width: 1280,
     height: 640,
@@ -12,11 +15,4 @@ const config = {
     }
 }
 
-const gameSettings = {
-    playerSpeed: 200,
-}
-
-
-
-
-const game = new Phaser.Game(config, gameSettings);
+export default config;
