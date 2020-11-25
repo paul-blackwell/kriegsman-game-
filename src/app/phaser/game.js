@@ -1,10 +1,7 @@
 import Phaser from 'phaser';
 import config from './config';
+import gameSettings from './gameSettings';
 
-
-const gameSettings = {
-    playerSpeed: 200,
-}
 
 const game = new Phaser.Game(config, gameSettings);
 
