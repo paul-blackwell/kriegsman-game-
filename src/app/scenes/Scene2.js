@@ -29,7 +29,6 @@ export default class Scene2 extends Phaser.Scene {
         this.player = new Player([config.width - 180, config.height - 200], 'playerIdle', 'player_idle_Animation', 100, this);
         this.player.playDefaultAnimation();
 
-
     
         // Make variable to listen for cursor keys
         this.cursorKeys = this.input.keyboard.createCursorKeys();
@@ -37,11 +36,10 @@ export default class Scene2 extends Phaser.Scene {
 
     update() {
 
-
-    // Move player on up down key
-    if (this.cursorKeys.up.isDown) {
+    // Move player on up and down keys
+    if (this.cursorKeys.up.isDown && this.player.character.y > 320) {
         this.player.movePlayer('up');
-    } else if (this.cursorKeys.down.isDown) {
+    } else if (this.cursorKeys.down.isDown && this.player.character.y < 540) {
         this.player.movePlayer('down');
     } else {
         this.player.movePlayer('stop')

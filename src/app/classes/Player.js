@@ -10,8 +10,8 @@ export default class Player extends Character {
          * Note we are also inheriting the animations from the scene,
          * as we have already preloaded them 
          */
-        super(position, defaultSprite, defaultAnimation, health, scene,);
-
+        super(position, defaultSprite, defaultAnimation, health, scene);
+        this.position = position;
        
     }
 
