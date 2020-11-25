@@ -28,7 +28,7 @@ export default class Scene2 extends Phaser.Scene {
         // set default sprite and play it
         this.player = new Player([config.width - 180, config.height - 200], 'playerIdle', 'player_idle_animation', 100, this);
         this.player.playDefaultAnimation();
-
+        
 
         // Make variable to listen for cursor keys
         this.cursorKeys = this.input.keyboard.createCursorKeys();

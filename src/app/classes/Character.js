@@ -23,4 +23,17 @@ export default class Character extends Phaser.GameObjects.Sprite {
         // character.play(`${this.animation}`);
         this.character.play(`${this.animation}`);
     }
+
+
+    // This method won't be used here, but will be inherited by child classes 
+    playNewAnimation(texture, animation) {
+        // check if animation if already playing if so do nothing
+        if(this.character.texture.key === texture) {
+            return;
+        }
+        this.character.setTexture(texture);
+        this.character.play(animation);
+    }
+
+
 }
