@@ -18,9 +18,15 @@ export default class Player extends Character {
             scene,
             'playerIdle',
             'playerWalking',
+            'playerShooting',
             'player_idle_animation',
             'player_walking_animation',
+            'player_shooting_animation',
         );
+
+        this.state = {
+            isPlayerShooting: false
+        }
 
     }
 
@@ -28,18 +34,41 @@ export default class Player extends Character {
     movePlayer(direction) {
         const player = this.scene.player.character;
 
-    
         // This will  move the player
         if (direction === 'up') {
             player.setVelocityY(-gameSettings.playerSpeed);
-            this.playNewAnimation('playerWalking', 'player_walking_animation')
+
+            if (!this.state.isPlayerShooting) { // if player not shooting
+                this.playNewAnimation('playerWalking', 'player_walking_animation');
+            }
         } else if (direction === 'down') {
             player.setVelocityY(gameSettings.playerSpeed);
-            this.playNewAnimation('playerWalking', 'player_walking_animation')
+            if (!this.state.isPlayerShooting) { // if player not shooting
+                this.playNewAnimation('playerWalking', 'player_walking_animation');
+            }
         } else if (direction === 'stop') {
             player.setVelocityY(0);
-            this.playNewAnimation('playerIdle', 'player_idle_animation')
+            if (!this.state.isPlayerShooting) { // if player not shooting
+                this.playNewAnimation('playerIdle', 'player_idle_animation');
+            }
         }
+    }
+
+    playerShoot() {
+
+        // Do nothing if the player is shooting
+        if (this.state.isPlayerShooting) {
+            return;
+        }
+
+        this.state.isPlayerShooting = true;
+
+        setTimeout(() => {
+            this.state.isPlayerShooting = false;
+        }, 1000);
+       
+        this.playNewAnimation('playerShooting', 'player_shooting_animation', false)
+    
     }
 
 }

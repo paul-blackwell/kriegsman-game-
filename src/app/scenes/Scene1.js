@@ -7,6 +7,7 @@ import foreground from '../..//assets/images/foreground.png';
 // Spites
 import playerIdle from '../../assets/spritesheets/krieg-guardsman-shritesheet.png'
 import playerWalking from '../../assets/spritesheets/krieg-guardsman-animated-walking-sprite.png';
+import playerShooting from '../../assets/spritesheets/krieg-guardsman-animated-shooting-sprite.png';
 
 
 export default class Scene1 extends Phaser.Scene {
@@ -36,6 +37,13 @@ export default class Scene1 extends Phaser.Scene {
             frameHeight: 192,
         });
 
+        // Player spritesheet (for player shooting)
+        this.load.spritesheet('playerShooting', playerShooting, {
+            frameWidth: 192,
+            frameHeight: 192,
+        });
+
+
     }
 
     create() {
@@ -52,7 +60,7 @@ export default class Scene1 extends Phaser.Scene {
             repeat: -1
         });
 
-        
+
         // Animation of the player walking
         this.anims.create({
             key: 'player_walking_animation',
@@ -61,6 +69,12 @@ export default class Scene1 extends Phaser.Scene {
             repeat: -1
         });
 
+        // Animation of the player Shooting 
+        this.anims.create({
+            key: 'player_shooting_animation',
+            frames: this.anims.generateFrameNumbers('playerShooting'),
+            frameRate: 16,
+        });
 
 
         this.text = this.add.text(100, 100, 'Select difficulty:', { fill: '#0f0' });
