@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 
 import config from '../phaser/config';
+import Player from '../classes/Player';
 
 export default class Scene2 extends Phaser.Scene {
 
@@ -8,8 +9,7 @@ export default class Scene2 extends Phaser.Scene {
         super('playGame');
     }
 
-    init(data){
-
+    init(data) {
         // Get difficulty from scene one
         this.difficulty = data.difficulty;
     }
@@ -21,6 +21,14 @@ export default class Scene2 extends Phaser.Scene {
 
         // Add foreground
         this.foreground = this.add.image(this.cameras.main.width / 2, config.height - 205, 'foreground');
+
+        // Add player
+        // Set position[x,y], sprite, animation, health
+        // set default sprite and play it
+        this.player = new Player([config.width - 180, config.height - 200], 'playerIdle', 'player_idle_Animation', 100, this);
+        this.player.setDefaultSprite();
+        //this.player = this.physics.add.sprite(config.width - 180, config.height - 200, 'player');
+        // this.player.play('player_idle_Animation');
 
     }
 
