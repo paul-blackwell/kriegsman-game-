@@ -26,29 +26,29 @@ export default class Scene2 extends Phaser.Scene {
         // Add player
         // Set position[x,y], defaultSprite, defaultAnimation, health, scene
         // set default sprite and play it
-        this.player = new Player([config.width - 180, config.height - 200], 'playerIdle', 'player_idle_Animation', 100, this);
+        this.player = new Player([config.width - 180, config.height - 200], 'playerIdle', 'player_idle_animation', 100, this);
         this.player.playDefaultAnimation();
 
-    
+
         // Make variable to listen for cursor keys
         this.cursorKeys = this.input.keyboard.createCursorKeys();
     }
 
     update() {
 
-    // Move player on up and down keys
-    if (this.cursorKeys.up.isDown && this.player.character.y > 320) {
-        this.player.movePlayer('up');
-    } else if (this.cursorKeys.down.isDown && this.player.character.y < 540) {
-        this.player.movePlayer('down');
-    } else {
-        this.player.movePlayer('stop')
-    }
-     
-        
+        // Move player on up and down keys
+        if (this.cursorKeys.up.isDown && this.player.character.y > 320) {
+            this.player.movePlayer('up');
+        } else if (this.cursorKeys.down.isDown && this.player.character.y < 540) {
+            this.player.movePlayer('down');
+        } else {
+            this.player.movePlayer('stop');
+            return;
+        }
     }
 
 
-   
+
+
 
 }

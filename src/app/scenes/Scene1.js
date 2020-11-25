@@ -6,6 +6,7 @@ import foreground from '../..//assets/images/foreground.png';
 
 // Spites
 import playerIdle from '../../assets/spritesheets/krieg-guardsman-shritesheet.png'
+import playerWalking from '../../assets/spritesheets/krieg-guardsman-animated-walking-sprite.png';
 
 
 export default class Scene1 extends Phaser.Scene {
@@ -29,6 +30,12 @@ export default class Scene1 extends Phaser.Scene {
             frameHeight: 192,
         });
 
+        // Player spritesheet (for player walking)
+        this.load.spritesheet('playerWalking', playerWalking, {
+            frameWidth: 160,
+            frameHeight: 192,
+        });
+
     }
 
     create() {
@@ -37,16 +44,22 @@ export default class Scene1 extends Phaser.Scene {
         this.cameras.main.setBackgroundColor('#040C06');
 
 
-          // Animation of the player idle
-          this.anims.create({
-            key: 'player_idle_Animation',
+        // Animation of the player idle
+        this.anims.create({
+            key: 'player_idle_animation',
             frames: this.anims.generateFrameNumbers('playerIdle'), // using the frames from the player sprite sheet
             frameRate: 16,
             repeat: -1
         });
 
-
-
+        
+        // Animation of the player walking
+        this.anims.create({
+            key: 'player_walking_animation',
+            frames: this.anims.generateFrameNumbers('playerWalking'),
+            frameRate: 16,
+            repeat: -1
+        });
 
 
 
