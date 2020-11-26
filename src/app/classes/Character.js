@@ -2,12 +2,12 @@ import Phaser from 'phaser';
 
 export default class Character extends Phaser.GameObjects.Sprite {
 
-    constructor(position, defaultSprite, defaultAnimation, health, scene, character) {
+    constructor(position, defaultSprite, defaultAnimation, health, scene) {
 
         super(scene);
 
         // Add game object to the scene
-        scene.add.existing(this)
+        scene.add.existing(this);
 
         this.position = position;
         this.sprite = defaultSprite;

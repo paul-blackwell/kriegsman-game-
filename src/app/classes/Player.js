@@ -67,7 +67,7 @@ export default class Player extends Character {
         this.state.isPlayerShooting = true;
 
         // Set timeout so the player can shoot agin after 1 second
-        setTimeout(() => {
+        setTimeout(() => {  
             this.state.isPlayerShooting = false;
         }, 1000);
 

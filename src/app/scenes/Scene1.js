@@ -8,7 +8,8 @@ import foreground from '../..//assets/images/foreground.png';
 import playerIdle from '../../assets/spritesheets/krieg-guardsman-shritesheet.png'
 import playerWalking from '../../assets/spritesheets/krieg-guardsman-animated-walking-sprite.png';
 import playerShooting from '../../assets/spritesheets/krieg-guardsman-animated-shooting-sprite.png';
-import playerReloading from '../../assets/spritesheets/krieg-guardsman-animated-reloading-sprite.png'
+import playerReloading from '../../assets/spritesheets/krieg-guardsman-animated-reloading-sprite.png';
+import bullet from '../../assets/spritesheets/bullet-sprite.png';
 
 
 export default class Scene1 extends Phaser.Scene {
@@ -45,10 +46,17 @@ export default class Scene1 extends Phaser.Scene {
         });
 
         // Player spritesheet (for player reloading)
-           this.load.spritesheet('playerReloading', playerReloading, {
+        this.load.spritesheet('playerReloading', playerReloading, {
             frameWidth: 192,
             frameHeight: 192,
         });
+
+        // Spritesheet for bullet
+        this.load.spritesheet('bullet', bullet, {
+            frameWidth: 32,
+            frameHeight: 32,
+        });
+
 
 
     }
@@ -83,14 +91,22 @@ export default class Scene1 extends Phaser.Scene {
             frameRate: 16,
         });
 
-          // Animation of the player reloading
-          this.anims.create({
+        // Animation of the player reloading
+        this.anims.create({
             key: 'player_reloading_animation',
             frames: this.anims.generateFrameNumbers('playerReloading'),
             frameRate: 16,
         });
 
-      
+            // Animation of the bullet in the air
+            this.anims.create({
+                key: 'bullet_animation',
+                frames: this.anims.generateFrameNumbers('bullet'),
+                frameRate: 16,
+                repeat: -1
+            });
+
+
 
 
         // Text for  'Select difficulty:'

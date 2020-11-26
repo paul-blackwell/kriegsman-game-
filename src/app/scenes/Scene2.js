@@ -3,6 +3,7 @@ import Phaser from 'phaser';
 import config from '../phaser/config';
 import gameSettings from '../phaser/gameSettings';
 import Player from '../classes/Player';
+import Bullet from '../classes/Bullet';
 
 export default class Scene2 extends Phaser.Scene {
 
@@ -38,6 +39,9 @@ export default class Scene2 extends Phaser.Scene {
         //  Make variable to listen for "R" key so player can reload
         this.rKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
+        // This will hold all the 'beam' Instances in the scene 
+        this.bulletsOnScreen = this.add.group();
+
     }
 
     update() {
@@ -45,6 +49,12 @@ export default class Scene2 extends Phaser.Scene {
         // Shoot gun when spacebar is pressed
         if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
             this.player.playerShoot();
+
+            this.bullet = new Bullet(this);
+            this.bullet.shootBullet();
+
+            console.log(this.bulletsOnScreen)
+        
         }
 
         // Reload gun when "r" key is pressed 
@@ -64,6 +74,21 @@ export default class Scene2 extends Phaser.Scene {
         }
 
 
+
+
+        /**
+         * Run the update of each bullet instance (they are stored 
+         * in the bulletsOnScreen group). This will destroy them once they
+         * get 50px from the left edge of the screen. 
+         * If we don't do this each bullet will cause performance problems as 
+         * they will go on forever.
+         * 
+         * check note on Bullet classes update method for more info 
+         */
+        for (let i = 0; i < this.bulletsOnScreen.getChildren().length; i++) {
+            const bullet = this.bulletsOnScreen.getChildren()[i];
+            bullet.update();
+        }
     }
 
 
