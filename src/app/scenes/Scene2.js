@@ -34,6 +34,10 @@ export default class Scene2 extends Phaser.Scene {
 
         //  Make variable to listen for space bar key so player can shoot
         this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
+        //  Make variable to listen for "R" key so player can reload
+        this.rKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+
     }
 
     update() {
@@ -41,6 +45,11 @@ export default class Scene2 extends Phaser.Scene {
         // Shoot gun when spacebar is pressed
         if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
             this.player.playerShoot();
+        }
+
+        // Reload gun when "r" key is pressed 
+        if (Phaser.Input.Keyboard.JustDown(this.rKey)) {
+            this.player.playerReload();
         }
 
 
