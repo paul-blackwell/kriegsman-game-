@@ -1,9 +1,10 @@
 import Phaser from 'phaser';
 
 import config from '../phaser/config';
-import gameSettings from '../phaser/gameSettings';
 import Player from '../classes/Player';
-import Bullet from '../classes/Bullet';
+import Enemy from '../classes/Enemy';
+
+import getRandomNumber from '../utils/getRandomNumber';
 
 export default class Scene2 extends Phaser.Scene {
 
@@ -41,6 +42,36 @@ export default class Scene2 extends Phaser.Scene {
 
         // This will hold all the 'beam' Instances in the scene 
         this.bulletsOnScreen = this.add.group();
+
+        // Make enemies using the makeEnemies method based on difficulty
+        this.enemies = this.makeEnemies(this.difficulty);
+
+
+    }
+
+    makeEnemies(difficulty) {
+        // this.enemy.playDefaultAnimation();
+
+        // Make enemies group
+        const enemies = this.physics.add.group();
+
+
+        const makeEnemiesGroup = (numberOfEnemies) => {
+            for (let i = 0; i < numberOfEnemies; i++) {
+
+                // Set position[x,y], defaultSprite, defaultAnimation, health, scene
+                const enemy = new Enemy([100, getRandomNumber(250, 550)], 'enemyIdle', 'enemy_idle_animation', 100, this);
+                enemies.add(enemy)
+            }
+        }
+
+        if (difficulty === 'easy') {
+            makeEnemiesGroup(3);
+        } else if (difficulty === 'hard') {
+            makeEnemiesGroup(5);
+        }
+
+        return enemies;
 
     }
 

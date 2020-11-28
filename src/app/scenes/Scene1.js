@@ -9,6 +9,7 @@ import playerIdle from '../../assets/spritesheets/krieg-guardsman-shritesheet.pn
 import playerWalking from '../../assets/spritesheets/krieg-guardsman-animated-walking-sprite.png';
 import playerShooting from '../../assets/spritesheets/krieg-guardsman-animated-shooting-sprite.png';
 import playerReloading from '../../assets/spritesheets/krieg-guardsman-animated-reloading-sprite.png';
+import enemyIdle from '../../assets/spritesheets/cultist-animated-idle-sprite.png'
 import bullet from '../../assets/spritesheets/bullet-sprite.png';
 
 
@@ -57,6 +58,15 @@ export default class Scene1 extends Phaser.Scene {
             frameHeight: 32,
         });
 
+        // Enemy spritesheet ( for idle)
+        this.load.spritesheet('enemyIdle', enemyIdle, {
+            frameWidth: 160,
+            frameHeight: 224,
+        });
+
+
+
+
 
 
     }
@@ -98,13 +108,25 @@ export default class Scene1 extends Phaser.Scene {
             frameRate: 16,
         });
 
-            // Animation of the bullet in the air
-            this.anims.create({
-                key: 'bullet_animation',
-                frames: this.anims.generateFrameNumbers('bullet'),
-                frameRate: 16,
-                repeat: -1
-            });
+
+        // Animation of the enemy idle
+        this.anims.create({
+            key: 'enemy_idle_animation',
+            frames: this.anims.generateFrameNumbers('enemyIdle'),
+            frameRate: 16,
+            repeat: -1
+        });
+
+
+
+
+        // Animation of the bullet in the air
+        this.anims.create({
+            key: 'bullet_animation',
+            frames: this.anims.generateFrameNumbers('bullet'),
+            frameRate: 16,
+            repeat: -1
+        });
 
 
 

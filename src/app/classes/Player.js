@@ -103,7 +103,6 @@ export default class Player extends Character {
 
     playerReload() {
 
-
         // Do nothing if the player is shooting or reloading
         if (this.state.isPlayerShooting || this.state.isPlayerReloading) {
             return;
