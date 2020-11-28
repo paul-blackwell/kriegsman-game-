@@ -10,6 +10,8 @@ import playerWalking from '../../assets/spritesheets/krieg-guardsman-animated-wa
 import playerShooting from '../../assets/spritesheets/krieg-guardsman-animated-shooting-sprite.png';
 import playerReloading from '../../assets/spritesheets/krieg-guardsman-animated-reloading-sprite.png';
 import enemyIdle from '../../assets/spritesheets/cultist-animated-idle-sprite.png'
+import enemyRunning from '../../assets/spritesheets/cultist-animated-running-sprite.png';
+import enemyAttacking from '../../assets/spritesheets/cultist-animated-attacking-sprite.png';
 import bullet from '../../assets/spritesheets/bullet-sprite.png';
 
 
@@ -52,11 +54,6 @@ export default class Scene1 extends Phaser.Scene {
             frameHeight: 192,
         });
 
-        // Spritesheet for bullet
-        this.load.spritesheet('bullet', bullet, {
-            frameWidth: 32,
-            frameHeight: 32,
-        });
 
         // Enemy spritesheet ( for idle)
         this.load.spritesheet('enemyIdle', enemyIdle, {
@@ -64,9 +61,24 @@ export default class Scene1 extends Phaser.Scene {
             frameHeight: 224,
         });
 
+        // Enemy spritesheet (for running)
+        this.load.spritesheet('enemyRunning', enemyRunning, {
+            frameWidth: 160,
+            frameHeight: 224,
+        });
+
+        // Enemy spritesheet (for enemy attacking)
+        this.load.spritesheet('enemyAttacking', enemyAttacking, {
+            frameWidth: 160,
+            frameHeight: 224,
+        });
 
 
-
+        // Spritesheet for bullet
+        this.load.spritesheet('bullet', bullet, {
+            frameWidth: 32,
+            frameHeight: 32,
+        });
 
 
     }
@@ -117,7 +129,13 @@ export default class Scene1 extends Phaser.Scene {
             repeat: -1
         });
 
-
+        // Animation of the enemy running
+        this.anims.create({
+            key: 'enemy_running_animation',
+            frames: this.anims.generateFrameNumbers('enemyRunning'),
+            frameRate: 16,
+            repeat: -1
+        });
 
 
         // Animation of the bullet in the air
@@ -128,6 +146,13 @@ export default class Scene1 extends Phaser.Scene {
             repeat: -1
         });
 
+        // Animation of the enemy attacking
+        this.anims.create({
+            key: 'enemy_attacking_animation',
+            frames: this.anims.generateFrameNumbers('enemyAttacking'),
+            frameRate: 16,
+            repeat: -1
+        });
 
 
 

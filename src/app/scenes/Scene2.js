@@ -61,6 +61,7 @@ export default class Scene2 extends Phaser.Scene {
 
                 // Set position[x,y], defaultSprite, defaultAnimation, health, scene
                 const enemy = new Enemy([100, getRandomNumber(250, 550)], 'enemyIdle', 'enemy_idle_animation', 100, this);
+                enemy.enemyRun();
                 enemies.add(enemy)
             }
         }
@@ -114,6 +115,15 @@ export default class Scene2 extends Phaser.Scene {
             const bullet = this.bulletsOnScreen.getChildren()[i];
             bullet.update();
         }
+
+
+
+        for (let i = 0; i < this.enemies.getChildren().length; i++) {
+            const enemy =this.enemies.getChildren()[i];
+            enemy.update();
+        }
+
+
 
     }
 

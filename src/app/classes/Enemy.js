@@ -1,5 +1,7 @@
 import Character from './Character';
 
+import getRandomNumber from '../utils/getRandomNumber';
+
 export default class Enemy extends Character {
 
 
@@ -15,11 +17,19 @@ export default class Enemy extends Character {
             defaultAnimation,
             health,
             scene,
+            'enemyRunning',
+            'enemyAttacking',
+            'enemy_running_animation',
+            'enemy_attacking_animation',
         );
 
 
         this.scene = scene;
         this.position = position;
+
+        this.state = {
+            isEnemyAttacking: false
+        }
 
         /**
          * This will stop the enemy from overlapping other enemies depending on 
@@ -48,9 +58,49 @@ export default class Enemy extends Character {
                 break;
         }
 
+
+        // Change  bounding box size of enemies
+        this.character.setSize(70, 140, true);
+
+        // Make enemy interactive
+        this.setInteractive();
+
+    }
+
+    enemyRun(speed = getRandomNumber(10,40)) {
+        this.playNewAnimation('enemyRunning', 'enemy_running_animation');
+
+        //this.character.x += speed;
+
+        //const randomSpeed  = getRandomNumber(10,20);
+        //this.character.body.velocity.x = `+${randomSpeed}`;
+        this.character.body.velocity.x = `+${speed}`;
+    }
+
+
+    enemyAttack() {
+
+        if(!this.state.isEnemyAttacking){
+            this.enemyRun(0);
+        }
+
+        this.state.isEnemyAttacking = true;
+        this.playNewAnimation('enemyAttacking', 'enemy_attacking_animation');
     }
 
 
 
+    /**
+   * Note:
+   * For performance reasons Phaser won't run the objects 
+   * update automatically so, we need to call the update 
+   * for each 'beam in the main update in the 'Scene 2'
+   */
+    update() {
+
+        if (this.character.x > 1000) {
+            this.enemyAttack();
+        }
+    }
 
 }
