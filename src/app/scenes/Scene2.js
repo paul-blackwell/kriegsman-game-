@@ -49,8 +49,6 @@ export default class Scene2 extends Phaser.Scene {
         // Shoot gun when spacebar is pressed
         if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
             this.player.playerShoot();
-
-            const bullet = new Bullet(this);
         }
 
         // Reload gun when "r" key is pressed 

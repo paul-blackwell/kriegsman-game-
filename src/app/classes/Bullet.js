@@ -3,41 +3,34 @@ import Phaser from 'phaser';
 export default class Bullet extends Phaser.GameObjects.Sprite {
 
 
-    constructor(scene) {
+    constructor(scene, x, y) {
 
-        /** 
-         * Get the position of the players ship as
-         * we want the beam to positioned where the ship is
-         * */
-
-        const x = scene.player.character.x;
-        const y = scene.player.character.y;
-
-        super(scene, x, y, 'bullet');
-
-
+       
+        super(scene ,x, y, 'bullet');
 
 
         // Add game object to the scene
         scene.add.existing(this)
 
+
         /**
-         * Play Beam animation
+         * Play Bullet animation
          * Enable sprite sheet to have physics
          */
         this.play('bullet_animation');
         scene.physics.world.enableBody(this);
 
 
-    
-        this.body.x = x - 100;
-        this.body.y = y - 60;
+        // Set the bullets position just above the players rifle
+        this.x = x - 100;
+        this.y = y - 50;
 
-        
-        this.body.velocity.x = -250;
+    
+        // Set the bullets velocity so it moves across the screen
+        this.body.velocity.x = -1000;
 
         /**
-         * Add the beam to the projectiles group, 
+         * Add the bullet to the bulletsOnScreen group, 
          * we will use this to later remove the beam from the scene
          */
         scene.bulletsOnScreen.add(this);
@@ -60,7 +53,6 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
          * if me don't it will cause performance
          * problems
          */
-        // was 50
         if (this.body.x < 50) {
             this.destroy();
         }
