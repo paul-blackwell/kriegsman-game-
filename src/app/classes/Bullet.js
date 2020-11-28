@@ -2,38 +2,48 @@ import Phaser from 'phaser';
 
 export default class Bullet extends Phaser.GameObjects.Sprite {
 
+
     constructor(scene) {
 
-        super(scene, 'bullet', 'bullet_animation');
+        /** 
+         * Get the position of the players ship as
+         * we want the beam to positioned where the ship is
+         * */
+
+        const x = scene.player.character.x;
+        const y = scene.player.character.y;
+
+        super(scene, x, y, 'bullet');
 
 
-        this.scene = scene;
-        this.player = scene.player.character; // Get player as we will their position
-        this.bulletSprite = {};
-    }
 
-    shootBullet() {
-        const y = this.player.y;
-        const x = this.player.x
+
+        // Add game object to the scene
+        scene.add.existing(this)
 
         /**
-         * Add new bullet sprite to the scene but only after 500 milliseconds,
-         * as we want the player to shoulder their rifle before firing 
+         * Play Beam animation
+         * Enable sprite sheet to have physics
          */
-        setTimeout(() => {
-            this.bulletSprite = this.scene.physics.add.sprite(x - 100, y - 42, 'bullet');
-            this.bulletSprite.play('bullet_animation');
-            this.bulletSprite.setInteractive();
-            this.bulletSprite.body.velocity.x = -1000;
+        this.play('bullet_animation');
+        scene.physics.world.enableBody(this);
+
+
+    
+        this.body.x = x - 100;
+        this.body.y = y - 60;
+
+        
+        this.body.velocity.x = -250;
 
         /**
-        * Add the bullet to the bulletsOnScreen group, 
-        * we will use this to later remove the bullet from the scene
-        */
-        this.scene.bulletsOnScreen.add(this);
-        }, 500);
+         * Add the beam to the projectiles group, 
+         * we will use this to later remove the beam from the scene
+         */
+        scene.bulletsOnScreen.add(this);
     }
- 
+
+
 
 
     /**
@@ -51,10 +61,8 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
          * problems
          */
         // was 50
-        if (this.bulletSprite.x < 1000) {
+        if (this.body.x < 50) {
             this.destroy();
-            //this.bulletSprite.destroy()
-            console.log('i was fired')
         }
     }
 

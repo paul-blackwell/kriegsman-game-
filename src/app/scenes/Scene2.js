@@ -50,11 +50,7 @@ export default class Scene2 extends Phaser.Scene {
         if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
             this.player.playerShoot();
 
-            this.bullet = new Bullet(this);
-            this.bullet.shootBullet();
-
-            console.log(this.bulletsOnScreen)
-        
+            const bullet = new Bullet(this);
         }
 
         // Reload gun when "r" key is pressed 
@@ -89,6 +85,7 @@ export default class Scene2 extends Phaser.Scene {
             const bullet = this.bulletsOnScreen.getChildren()[i];
             bullet.update();
         }
+
     }
 
 

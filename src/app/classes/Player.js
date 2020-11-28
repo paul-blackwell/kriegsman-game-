@@ -78,8 +78,6 @@ export default class Player extends Character {
 
     playerReload() {
 
-        //console.log('playerReload() was fired,' + this.state.isPlayerReloading + this.state.isPlayerShooting)
-
 
         // Do nothing if the player is shooting or reloading
         if (this.state.isPlayerShooting || this.state.isPlayerReloading) {
@@ -94,7 +92,6 @@ export default class Player extends Character {
         }, 1000);
 
         this.playNewAnimation('playerReloading', 'player_reloading_animation', false)
-
     }
 
 }
