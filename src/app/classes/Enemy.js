@@ -19,8 +19,10 @@ export default class Enemy extends Character {
             scene,
             'enemyRunning',
             'enemyAttacking',
+            'enemyShotChest',
             'enemy_running_animation',
             'enemy_attacking_animation',
+            'enemy_shot_chest_animation',
         );
 
 
@@ -67,26 +69,84 @@ export default class Enemy extends Character {
 
     }
 
-    enemyRun(speed = getRandomNumber(10,40)) {
+    enemyRun(speed = getRandomNumber(10, 40)) {
         this.playNewAnimation('enemyRunning', 'enemy_running_animation');
 
-        //this.character.x += speed;
-
-        //const randomSpeed  = getRandomNumber(10,20);
-        //this.character.body.velocity.x = `+${randomSpeed}`;
         this.character.body.velocity.x = `+${speed}`;
     }
 
 
     enemyAttack() {
 
-        if(!this.state.isEnemyAttacking){
+        /**
+         * Because this method will run inside the update method, 
+         * we need to check the state for isEnemyAttacking. The first time 
+         * the update method runs this will be false but after that, enemyRun
+         *  will not fire because if it does we will not be able to run the 
+         * playNewAnimation method as enemyRun will constantly be running. Also
+         * check the enemy health is greater that 0  as they can't attack if 
+         * they are dead
+         */
+        if (!this.state.isEnemyAttacking && this.health > 0) {
             this.enemyRun(0);
         }
 
+
+        // If enemy is already attacking return (this will happen inside the update method)
+        if(this.state.isEnemyAttacking) {
+            return;
+        }
+
         this.state.isEnemyAttacking = true;
+
         this.playNewAnimation('enemyAttacking', 'enemy_attacking_animation');
+
     }
+
+
+
+    enemyHit() {
+
+        // Subtract 100 
+        this.health - 100;
+
+        /**
+         *  Run a check on the health, doing it this way as we 
+         * might want to make the enemy go down in more than one shot in the future 
+         */
+
+        if (this.health === 0) {
+            // this.playNewAnimation('enemyShotChest', 'enemy_shot_chest_animation');
+        }
+        this.playNewAnimation('enemyShotChest', 'enemy_shot_chest_animation');
+
+        // Add fadeout 
+        const timeline = this.scene.tweens.createTimeline();
+
+        timeline.add({
+            targets: enemy,
+            alpha: 0,
+            ease: 'Power1',
+            duration: 50
+        });
+        timeline.add({
+            targets: enemy,
+            alpha: 1,
+            ease: 'Power1',
+            duration: 50
+        });
+
+        timeline.add({
+            targets: enemy,
+            alpha: 0,
+            ease: 'Power1',
+            duration: 1000
+        });
+
+        timeline.play();
+
+    }
+
 
 
 

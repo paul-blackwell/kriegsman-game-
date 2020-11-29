@@ -12,6 +12,7 @@ import playerReloading from '../../assets/spritesheets/krieg-guardsman-animated-
 import enemyIdle from '../../assets/spritesheets/cultist-animated-idle-sprite.png'
 import enemyRunning from '../../assets/spritesheets/cultist-animated-running-sprite.png';
 import enemyAttacking from '../../assets/spritesheets/cultist-animated-attacking-sprite.png';
+import enemyShotChest from '../../assets/spritesheets/cultist-animated-shot-in-chest-sprite.png';
 import bullet from '../../assets/spritesheets/bullet-sprite.png';
 
 
@@ -73,6 +74,11 @@ export default class Scene1 extends Phaser.Scene {
             frameHeight: 224,
         });
 
+        //  Enemy spritesheet (for enemy shot in chest) 
+        this.load.spritesheet('enemyShotChest', enemyShotChest, {
+            frameWidth: 160,
+            frameHeight: 224,
+        });
 
         // Spritesheet for bullet
         this.load.spritesheet('bullet', bullet, {
@@ -152,6 +158,14 @@ export default class Scene1 extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('enemyAttacking'),
             frameRate: 16,
             repeat: -1
+        });
+
+
+        // Animation of the enemy shot in chest
+        this.anims.create({
+            key: 'enemy_shot_chest_animation',
+            frames: this.anims.generateFrameNumbers('enemyShotChest'),
+            frameRate: 16,
         });
 
 
