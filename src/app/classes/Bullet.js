@@ -5,9 +5,10 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
 
     constructor(scene, x, y) {
 
-       
-        super(scene ,x, y, 'bullet');
 
+        super(scene, x, y, 'bullet');
+
+        
 
         // Add game object to the scene
         scene.add.existing(this)
@@ -20,20 +21,26 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
         this.play('bullet_animation');
         scene.physics.world.enableBody(this);
 
+        // Make enemy interactive
+        this.setInteractive();
+
+        
 
         // Set the bullets position just above the players rifle
         this.x = x - 100;
         this.y = y - 50;
 
-    
+
         // Set the bullets velocity so it moves across the screen
         this.body.velocity.x = -1000;
 
+    
         /**
          * Add the bullet to the bulletsOnScreen group, 
          * we will use this to later remove the beam from the scene
          */
         scene.bulletsOnScreen.add(this);
+        
     }
 
 

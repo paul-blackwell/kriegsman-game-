@@ -46,8 +46,19 @@ export default class Scene2 extends Phaser.Scene {
         // Make enemies using the makeEnemies method based on difficulty
         this.enemies = this.makeEnemies(this.difficulty);
 
+       
+        // Loop over enemies group and add physics will each child and bullets on screen
+        for (let i = 0; i < this.enemies.getChildren().length; i++) {
+            const enemy =this.enemies.getChildren()[i];
+            this.physics.add.overlap(enemy.character, this.bulletsOnScreen, () => {
+                enemy.enemyHit();
+            }, null, this);
+        }
 
     }
+
+
+
 
     makeEnemies(difficulty) {
         // this.enemy.playDefaultAnimation();

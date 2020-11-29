@@ -66,6 +66,7 @@ export default class Enemy extends Character {
 
         // Make enemy interactive
         this.setInteractive();
+        this.character.setInteractive()
 
     }
 
@@ -93,7 +94,7 @@ export default class Enemy extends Character {
 
 
         // If enemy is already attacking return (this will happen inside the update method)
-        if(this.state.isEnemyAttacking) {
+        if (this.state.isEnemyAttacking) {
             return;
         }
 
@@ -107,37 +108,41 @@ export default class Enemy extends Character {
 
     enemyHit() {
 
-        // Subtract 100 
-        this.health - 100;
-
         /**
-         *  Run a check on the health, doing it this way as we 
-         * might want to make the enemy go down in more than one shot in the future 
+         *  This is to stop the enemy hit animation playing more than once if the 
+         * enemy is shot more than one time in quick succession
          */
-
-        if (this.health === 0) {
-            // this.playNewAnimation('enemyShotChest', 'enemy_shot_chest_animation');
+        if( this.health <= 0) {
+            return
         }
+
+        // Subtract 100 
+        this.health = this.health - 100;
+
+        // Stop the enemy from running 
+        this.enemyRun(0);
+
+        // Play the shot in chest animation
         this.playNewAnimation('enemyShotChest', 'enemy_shot_chest_animation');
 
         // Add fadeout 
         const timeline = this.scene.tweens.createTimeline();
 
         timeline.add({
-            targets: enemy,
+            targets: this.character,
             alpha: 0,
             ease: 'Power1',
             duration: 50
         });
         timeline.add({
-            targets: enemy,
+            targets: this.character,
             alpha: 1,
             ease: 'Power1',
             duration: 50
         });
 
         timeline.add({
-            targets: enemy,
+            targets: this.character,
             alpha: 0,
             ease: 'Power1',
             duration: 1000
@@ -147,6 +152,10 @@ export default class Enemy extends Character {
 
     }
 
+
+    resetEnemyPosition() {
+
+    }
 
 
 
