@@ -112,7 +112,7 @@ export default class Enemy extends Character {
          *  This is to stop the enemy hit animation playing more than once if the 
          * enemy is shot more than one time in quick succession
          */
-        if( this.health <= 0) {
+        if (this.health <= 0) {
             return
         }
 
@@ -150,11 +150,35 @@ export default class Enemy extends Character {
 
         timeline.play();
 
+        // Reset enemy
+        this.resetEnemy();
     }
 
 
-    resetEnemyPosition() {
 
+    resetEnemy() {
+
+        setTimeout(() => {
+            // Reset enemy position, health and make enemy run
+            this.character.x = -100;
+            this.health = 100;
+            this.enemyRun();
+
+            /**
+             * Set alpha to 1 so we can see the enemy again
+             *  but had to use a tween as just setting the alpha to 1
+             * (this.character.alpha = 1) didn't work
+             */
+            const timeline = this.scene.tweens.createTimeline();
+            timeline.add({
+                targets: this.character,
+                alpha: 1,
+                ease: 'Power1',
+                duration: 50
+            });
+            timeline.play();
+
+        }, 1500);
     }
 
 
