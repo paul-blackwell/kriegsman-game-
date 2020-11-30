@@ -113,7 +113,7 @@ export default class Enemy extends Character {
          * enemy is shot more than one time in quick succession
          */
         if (this.health <= 0) {
-            return
+            return;
         }
 
         // Subtract 100 

@@ -34,12 +34,6 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
         // Set the bullets velocity so it moves across the screen
         this.body.velocity.x = -1000;
 
-    
-        /**
-         * Add the bullet to the bulletsOnScreen group, 
-         * we will use this to later remove the bullet from the scene
-         */
-        //scene.bulletsOnScreen.add(this);
 
         /**
          * Add the bullet to the activeBullets array, 

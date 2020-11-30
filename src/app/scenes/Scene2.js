@@ -1,6 +1,8 @@
 import Phaser from 'phaser';
 
 import config from '../phaser/config';
+
+import Sandbags from '../classes/Sandbags';
 import Player from '../classes/Player';
 import Enemy from '../classes/Enemy';
 
@@ -25,10 +27,13 @@ export default class Scene2 extends Phaser.Scene {
         // Add foreground
         this.foreground = this.add.image(this.cameras.main.width / 2, config.height - 205, 'foreground');
 
+        // And Sandbags
+        this.sandbags = new Sandbags(this, 100);
+
         // Add player
         // Set position[x,y], defaultSprite, defaultAnimation, health, scene
         // set default sprite and play it
-        this.player = new Player([config.width - 180, config.height - 200], 'playerIdle', 'player_idle_animation', 100, this);
+        this.player = new Player([config.width - 100, config.height - 200], 'playerIdle', 'player_idle_animation', 100, this);
         this.player.playDefaultAnimation();
 
         // Make variable to listen for cursor keys
@@ -40,8 +45,6 @@ export default class Scene2 extends Phaser.Scene {
         //  Make variable to listen for "R" key so player can reload
         this.rKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
-        // This will hold all the 'bullet' Instances in the scene 
-        //this.bulletsOnScreen = this.add.group();
 
         // This will hold all the 'bullet' Instances in the scene 
         this.activeBullets = [];
@@ -50,12 +53,16 @@ export default class Scene2 extends Phaser.Scene {
         this.enemies = this.makeEnemies(this.difficulty);
 
 
-        // Loop over enemies 
+        // This will Loop over enemies and add overlay between them and the bullets
         this.enemies.forEach(enemy => {
             // add overlap between enemies and bullets
             this.physics.add.overlap(enemy.character, this.activeBullets, () => {
 
-                // Check the enemy health as we don't want to destroy the bullet if the enemy is already dead
+                /**
+                 * Check the enemy health as we don't want to destroy,
+                 * the bullet if the enemy is already dead, we have to do this
+                 * because the enemies take one second to fade off the screen
+                 */
                 if (enemy.health > 0) {
 
                     // If bullet hits enemy run enemy hit method
@@ -69,9 +76,14 @@ export default class Scene2 extends Phaser.Scene {
                 }
 
             }, null, this);
-        })
+
+            //Make enemies stop and attack when they get to the sandbags 
+            this.physics.add.overlap(enemy.character, this.sandbags, () => {
+                console.log('we touched');
+            }, null, this);
 
 
+        });
 
     }
 
@@ -125,9 +137,6 @@ export default class Scene2 extends Phaser.Scene {
         } else {
             this.player.movePlayer('stop');
         }
-
-
-
 
 
 
