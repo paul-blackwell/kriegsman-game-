@@ -50,38 +50,23 @@ export default class Scene2 extends Phaser.Scene {
         this.enemies = this.makeEnemies(this.difficulty);
 
 
-        // Loop over enemies group and add physics will each child and bullets on screen
-        // for (let i = 0; i < this.enemies.getChildren().length; i++) {
-        //     const enemy = this.enemies.getChildren()[i];
-        //     this.physics.add.overlap(enemy.character, this.activeBullets, () => {
-        //         enemy.enemyHit();
-
-
-        //         this.activeBullets.forEach(bullet => {
-        //             bullet.destroy();
-        //         })
-
-        //         // for (let i = 0; i < this.bulletsOnScreen.getChildren().length; i++) {
-        //         //     const bullet = this.bulletsOnScreen.getChildren()[i];
-        //         //     bullet.destroy();
-        //         // }
-
-        //     }, null, this);
-        // }
-
         // Loop over enemies 
         this.enemies.forEach(enemy => {
+            // add overlap between enemies and bullets
+            this.physics.add.overlap(enemy.character, this.activeBullets, () => {
 
-                // add overlap between enemies and bullets
-                this.physics.add.overlap(enemy.character, this.activeBullets, () => {
+                // Check the enemy health as we don't want to destroy the bullet if the enemy is already dead
+                if (enemy.health > 0) {
 
-                // If bullet hits enemy run enemy hit method
-                enemy.enemyHit();
+                    // If bullet hits enemy run enemy hit method
+                    enemy.enemyHit();
 
-                 // Destroy the bullet  (Note this will destroy all bullets, works for now but will need to be changed)
-                this.activeBullets.forEach(bullet => {
-                    bullet.destroy();
-                });
+                    // Destroy the bullet  (Note this will destroy all bullets, works for now but will need to be changed)
+                    this.activeBullets.forEach(bullet => {
+                        bullet.destroy();
+                    });
+
+                }
 
             }, null, this);
         })
@@ -91,25 +76,11 @@ export default class Scene2 extends Phaser.Scene {
     }
 
 
-
-
+    // Will use this method to make the enemies for each game
     makeEnemies(difficulty) {
-        // this.enemy.playDefaultAnimation();
 
-        // Make enemies group
-        //const enemies = this.physics.add.group();
+        // Make enemies array 
         const enemies = []
-
-
-        // const makeEnemiesGroup = (numberOfEnemies) => {
-        //     for (let i = 0; i < numberOfEnemies; i++) {
-
-        //         // Set position[x,y], defaultSprite, defaultAnimation, health, scene
-        //         const enemy = new Enemy([100, getRandomNumber(250, 550)], 'enemyIdle', 'enemy_idle_animation', 100, this);
-        //         enemy.enemyRun();
-        //         enemies.add(enemy)
-        //     }
-        // }
 
         const makeEnemies = (numberOfEnemies) => {
             for (let i = 0; i < numberOfEnemies; i++) {
@@ -158,19 +129,6 @@ export default class Scene2 extends Phaser.Scene {
 
 
 
-        /**
-         * Run the update of each bullet instance (they are stored 
-         * in the bulletsOnScreen group). This will destroy them once they
-         * get 50px from the left edge of the screen. 
-         * If we don't do this each bullet will cause performance problems as 
-         * they will go on forever.
-         * 
-         * check note on Bullet classes update method for more info 
-         */
-        // for (let i = 0; i < this.bulletsOnScreen.getChildren().length; i++) {
-        //     const bullet = this.bulletsOnScreen.getChildren()[i];
-        //     bullet.update();
-        // }
 
 
 
@@ -188,13 +146,7 @@ export default class Scene2 extends Phaser.Scene {
         });
 
 
-
-
-        // for (let i = 0; i < this.enemies.getChildren().length; i++) {
-        //     const enemy = this.enemies.getChildren()[i];
-        //     enemy.update();
-        // }
-
+        // This does the same as the code above but for the enemies
         this.enemies.forEach(enemy => {
             enemy.update();
         })
