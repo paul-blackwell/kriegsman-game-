@@ -88,7 +88,7 @@ export default class Enemy extends Character {
          * check the enemy health is greater that 0  as they can't attack if 
          * they are dead
          */
-        if (!this.state.isEnemyAttacking && this.health > 0) {
+        if (!this.state.isEnemyAttacking && this.health >= 0) {
             this.enemyRun(0);
         }
 
@@ -159,9 +159,10 @@ export default class Enemy extends Character {
     resetEnemy() {
 
         setTimeout(() => {
-            // Reset enemy position, health and make enemy run
+            // Reset enemy position, health, is they are attacking and make enemy run
             this.character.x = -100;
             this.health = 100;
+            this.state.isEnemyAttacking = false;
             this.enemyRun();
 
             /**

@@ -37,9 +37,15 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
     
         /**
          * Add the bullet to the bulletsOnScreen group, 
-         * we will use this to later remove the beam from the scene
+         * we will use this to later remove the bullet from the scene
          */
-        scene.bulletsOnScreen.add(this);
+        //scene.bulletsOnScreen.add(this);
+
+        /**
+         * Add the bullet to the activeBullets array, 
+         * we will use this to later remove the bullet from the scene
+         */
+        scene.activeBullets.push(this)
         
     }
 
@@ -60,7 +66,8 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
          * if me don't it will cause performance
          * problems
          */
-        if (this.body.x < 50) {
+        // was 50
+        if (this.x < 100) {
             this.destroy();
         }
     }

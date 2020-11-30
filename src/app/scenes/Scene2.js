@@ -40,20 +40,53 @@ export default class Scene2 extends Phaser.Scene {
         //  Make variable to listen for "R" key so player can reload
         this.rKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
-        // This will hold all the 'beam' Instances in the scene 
-        this.bulletsOnScreen = this.add.group();
+        // This will hold all the 'bullet' Instances in the scene 
+        //this.bulletsOnScreen = this.add.group();
+
+        // This will hold all the 'bullet' Instances in the scene 
+        this.activeBullets = [];
 
         // Make enemies using the makeEnemies method based on difficulty
         this.enemies = this.makeEnemies(this.difficulty);
 
-       
+
         // Loop over enemies group and add physics will each child and bullets on screen
-        for (let i = 0; i < this.enemies.getChildren().length; i++) {
-            const enemy =this.enemies.getChildren()[i];
-            this.physics.add.overlap(enemy.character, this.bulletsOnScreen, () => {
+        // for (let i = 0; i < this.enemies.getChildren().length; i++) {
+        //     const enemy = this.enemies.getChildren()[i];
+        //     this.physics.add.overlap(enemy.character, this.activeBullets, () => {
+        //         enemy.enemyHit();
+
+
+        //         this.activeBullets.forEach(bullet => {
+        //             bullet.destroy();
+        //         })
+
+        //         // for (let i = 0; i < this.bulletsOnScreen.getChildren().length; i++) {
+        //         //     const bullet = this.bulletsOnScreen.getChildren()[i];
+        //         //     bullet.destroy();
+        //         // }
+
+        //     }, null, this);
+        // }
+
+        // Loop over enemies 
+        this.enemies.forEach(enemy => {
+
+                // add overlap between enemies and bullets
+                this.physics.add.overlap(enemy.character, this.activeBullets, () => {
+
+                // If bullet hits enemy run enemy hit method
                 enemy.enemyHit();
+
+                 // Destroy the bullet  (Note this will destroy all bullets, works for now but will need to be changed)
+                this.activeBullets.forEach(bullet => {
+                    bullet.destroy();
+                });
+
             }, null, this);
-        }
+        })
+
+
 
     }
 
@@ -64,27 +97,39 @@ export default class Scene2 extends Phaser.Scene {
         // this.enemy.playDefaultAnimation();
 
         // Make enemies group
-        const enemies = this.physics.add.group();
+        //const enemies = this.physics.add.group();
+        const enemies = []
 
 
-        const makeEnemiesGroup = (numberOfEnemies) => {
+        // const makeEnemiesGroup = (numberOfEnemies) => {
+        //     for (let i = 0; i < numberOfEnemies; i++) {
+
+        //         // Set position[x,y], defaultSprite, defaultAnimation, health, scene
+        //         const enemy = new Enemy([100, getRandomNumber(250, 550)], 'enemyIdle', 'enemy_idle_animation', 100, this);
+        //         enemy.enemyRun();
+        //         enemies.add(enemy)
+        //     }
+        // }
+
+        const makeEnemies = (numberOfEnemies) => {
             for (let i = 0; i < numberOfEnemies; i++) {
-
                 // Set position[x,y], defaultSprite, defaultAnimation, health, scene
                 const enemy = new Enemy([100, getRandomNumber(250, 550)], 'enemyIdle', 'enemy_idle_animation', 100, this);
                 enemy.enemyRun();
-                enemies.add(enemy)
+                //enemies.add(enemy);
+                enemies.push(enemy);
             }
         }
 
         if (difficulty === 'easy') {
-            makeEnemiesGroup(3);
+            //makeEnemiesGroup(3);
+            makeEnemies(3);
         } else if (difficulty === 'hard') {
-            makeEnemiesGroup(5);
+            //makeEnemiesGroup(5);
+            makeEnemies(5);
         }
 
         return enemies;
-
     }
 
     update() {
@@ -122,17 +167,37 @@ export default class Scene2 extends Phaser.Scene {
          * 
          * check note on Bullet classes update method for more info 
          */
-        for (let i = 0; i < this.bulletsOnScreen.getChildren().length; i++) {
-            const bullet = this.bulletsOnScreen.getChildren()[i];
+        // for (let i = 0; i < this.bulletsOnScreen.getChildren().length; i++) {
+        //     const bullet = this.bulletsOnScreen.getChildren()[i];
+        //     bullet.update();
+        // }
+
+
+
+        /**
+         * Run the update of each bullet instance (they are stored 
+         * in the activeBullets array). This will destroy them once they
+         * get 50px from the left edge of the screen. 
+         * If we don't do this each bullet will cause performance problems as 
+         * they will go on forever.
+         * 
+         * check note on Bullet classes update method for more info 
+         */
+        this.activeBullets.forEach(bullet => {
             bullet.update();
-        }
+        });
 
 
 
-        for (let i = 0; i < this.enemies.getChildren().length; i++) {
-            const enemy =this.enemies.getChildren()[i];
+
+        // for (let i = 0; i < this.enemies.getChildren().length; i++) {
+        //     const enemy = this.enemies.getChildren()[i];
+        //     enemy.update();
+        // }
+
+        this.enemies.forEach(enemy => {
             enemy.update();
-        }
+        })
 
 
 
