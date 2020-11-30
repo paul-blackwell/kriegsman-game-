@@ -117,6 +117,8 @@ export default class Scene1 extends Phaser.Scene {
             frameRate: 16,
         });
 
+        
+
 
 
         // Animation of the player idle

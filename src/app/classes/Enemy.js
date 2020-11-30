@@ -30,7 +30,7 @@ export default class Enemy extends Character {
         this.position = position;
 
         this.state = {
-            isEnemyAttacking: false
+            isEnemyAttacking: false,
         }
 
         /**
@@ -116,6 +116,9 @@ export default class Enemy extends Character {
             return;
         }
 
+        // Make hitbox temporarily really small , to stop it interacting with the sandbags
+        this.character.body.setSize(1, 1, true);
+
         // Subtract 100 
         this.health = this.health - 100;
 
@@ -165,6 +168,9 @@ export default class Enemy extends Character {
             this.state.isEnemyAttacking = false;
             this.enemyRun();
 
+            // Reset hitbox size
+            this.character.body.setSize(70, 140, true);
+
             /**
              * Set alpha to 1 so we can see the enemy again
              *  but had to use a tween as just setting the alpha to 1
@@ -188,13 +194,12 @@ export default class Enemy extends Character {
    * Note:
    * For performance reasons Phaser won't run the objects 
    * update automatically so, we need to call the update 
-   * for each 'beam in the main update in the 'Scene 2'
+   * for each enemy in the main update in the 'Scene 2'
    */
-    update() {
-
-        if (this.character.x > 1000) {
-            this.enemyAttack();
-        }
-    }
+    // update() {
+    //     if (this.character.x > 1000) {
+    //         this.enemyAttack();
+    //     }
+    // }
 
 }

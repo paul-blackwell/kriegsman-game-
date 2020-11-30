@@ -79,7 +79,8 @@ export default class Scene2 extends Phaser.Scene {
 
             //Make enemies stop and attack when they get to the sandbags 
             this.physics.add.overlap(enemy.character, this.sandbags, () => {
-                console.log('we touched');
+                    enemy.enemyAttack();
+                    this.sandbags.damageSandBags();
             }, null, this);
 
 
@@ -153,13 +154,6 @@ export default class Scene2 extends Phaser.Scene {
         this.activeBullets.forEach(bullet => {
             bullet.update();
         });
-
-
-        // This does the same as the code above but for the enemies
-        this.enemies.forEach(enemy => {
-            enemy.update();
-        })
-
 
 
     }

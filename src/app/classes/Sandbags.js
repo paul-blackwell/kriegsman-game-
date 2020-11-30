@@ -11,7 +11,6 @@ export default class Sandbags extends Phaser.GameObjects.Sprite {
 
         this.health = health;
 
-
         // Add game object to the scene
         scene.add.existing(this)
 
@@ -28,12 +27,52 @@ export default class Sandbags extends Phaser.GameObjects.Sprite {
         this.setFrame(0)
         this.x = 1000;
         this.y = 450;
-        this.body.setSize(250, this.hight, true);
+        this.body.setSize(200, this.hight, true);
 
 
         // Make sandbags interactive
         this.setInteractive();
 
+    }
+
+
+
+    updateSandBagTexture() {
+        const health = this.health;
+
+        switch (true) {
+            case (health < 100 && health > 80):
+                this.setFrame(1)
+                break;
+            case (health < 80 && health > 60):
+                this.setFrame(2)
+                break;
+            case (health < 60 && health > 40):
+                this.setFrame(3)
+                break;
+            case (health < 20 && health > 1):
+                this.setFrame(4)
+                break;
+        }
+    }
+
+
+
+    damageSandBags() {
+        /**
+         * Destroy sandbags if they have no health and
+         * break out of this method 
+         */
+        if (this.health <= 0) {
+            this.destroy();
+            return;
+        }
+
+        // Update texture
+        this.updateSandBagTexture();
+
+        // Remove - 0.1 from the health 
+        this.health = this.health - 0.1;
     }
 
 }
