@@ -3,6 +3,7 @@ import Phaser from 'phaser';
 import config from '../phaser/config';
 
 import Sandbags from '../classes/Sandbags';
+import TankTrap from '../classes/TankTrap';
 import Player from '../classes/Player';
 import Enemy from '../classes/Enemy';
 
@@ -26,6 +27,14 @@ export default class Scene2 extends Phaser.Scene {
 
         // Add foreground
         this.foreground = this.add.image(this.cameras.main.width / 2, config.height - 205, 'foreground');
+
+        // Add tank traps
+        // this.tankTrap1 = new TankTrap(this, 400, 300);
+        // this.tankTrap2 = new TankTrap(this, 100, 400);
+        // this.tankTrap2 = new TankTrap(this, 400, 500);
+        // this.tankTrap4 = new TankTrap(this, 600, 600);
+    
+
 
         // And Sandbags
         this.sandbags = new Sandbags(this, 100);
@@ -55,29 +64,27 @@ export default class Scene2 extends Phaser.Scene {
 
         // This will Loop over enemies and add overlay between them and the bullets
         this.enemies.forEach(enemy => {
+
+
             // add overlap between enemies and bullets
             this.physics.add.overlap(enemy.character, this.activeBullets, () => {
-
                 /**
                  * Check the enemy health as we don't want to destroy,
                  * the bullet if the enemy is already dead, we have to do this
                  * because the enemies take one second to fade off the screen
                  */
                 if (enemy.health > 0) {
-
                     // If bullet hits enemy run enemy hit method
                     enemy.enemyHit();
-
                     // Destroy the bullet  (Note this will destroy all bullets, works for now but will need to be changed)
                     this.activeBullets.forEach(bullet => {
                         bullet.destroy();
                     });
-
                 }
-
             }, null, this);
+            
 
-            //Make enemies stop and attack when they get to the sandbags 
+            // Make enemies stop and attack when they get to the sandbags 
             this.physics.add.overlap(enemy.character, this.sandbags, () => {
                     enemy.enemyAttack();
                     this.sandbags.damageSandBags();

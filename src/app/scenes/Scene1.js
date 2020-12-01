@@ -4,12 +4,10 @@ import Phaser from 'phaser';
 import background from '../../assets/images/background.png'
 import foreground from '../../assets/images/foreground.png';
 
-// just for testing
-//import sandbags from '../../assets/images/sandbags.png';
-
 
 // Spites
 import sandbags from '../../assets/spritesheets/sandbags-sprite-sheet.png';
+import tankTrap from '../../assets/spritesheets/single-tank-trap-spite-sheet.png'
 import playerIdle from '../../assets/spritesheets/krieg-guardsman-shritesheet.png'
 import playerWalking from '../../assets/spritesheets/krieg-guardsman-animated-walking-sprite.png';
 import playerShooting from '../../assets/spritesheets/krieg-guardsman-animated-shooting-sprite.png';
@@ -35,7 +33,7 @@ export default class Scene1 extends Phaser.Scene {
         // Image for foreground
         this.load.image('foreground', foreground);
 
-
+       
         // Just for testing
         //this.load.image('sandbags', sandbags);
 
@@ -43,6 +41,13 @@ export default class Scene1 extends Phaser.Scene {
         this.load.spritesheet('sandbags', sandbags, {
             frameWidth: 256,
             frameHeight: 384,
+        });
+
+        
+        // tankTrap spritesheet
+        this.load.spritesheet('tankTrap', tankTrap, {
+            frameWidth: 160,
+            frameHeight: 128,
         });
 
 
@@ -111,13 +116,11 @@ export default class Scene1 extends Phaser.Scene {
 
         
         // Sandbag animation 
-        this.anims.create({
-            key: 'sandbag_animation',
-            frames: this.anims.generateFrameNumbers('sandbags', {frames: [ 0, 1, 2, 3, 4, 5]}), 
-            frameRate: 16,
-        });
-
-        
+        // this.anims.create({
+        //     key: 'sandbag_animation',
+        //     frames: this.anims.generateFrameNumbers('sandbags', {frames: [ 0, 1, 2, 3, 4, 5]}), 
+        //     frameRate: 16,
+        // });
 
 
 

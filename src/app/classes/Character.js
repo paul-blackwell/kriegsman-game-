@@ -19,11 +19,8 @@ export default class Character extends Phaser.GameObjects.Sprite {
 
     //set default sprite and play it
     playDefaultAnimation() {
-        // const character = this.scene.physics.add.sprite(this.position[0], this.position[1], this.sprite);
-        // character.play(`${this.animation}`);
         this.character.play(`${this.animation}`);
     }
-
 
     // This method won't be used here, but will be inherited by child classes 
     playNewAnimation(texture, animation, playOnce = true) {
