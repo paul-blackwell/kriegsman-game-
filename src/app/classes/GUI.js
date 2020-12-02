@@ -26,6 +26,8 @@ export default class GUI extends Phaser.GameObjects.Sprite {
 
         this.addCommissar();
         this.currentAmmo();
+
+        this.currentScore();
     }
 
 
@@ -90,17 +92,16 @@ export default class GUI extends Phaser.GameObjects.Sprite {
 
 
     currentAmmo() {
-        this.currentAmoText = this.scene.add.text(1030, 30, `Ammunition:`, { fill: '#0f0' });
+        this.currentAmoText = this.scene.add.text(1030, 30, 'Ammunition:', { fill: '#0f0' });
     }
 
 
     currentScore() {
-        this.currentScoreText = this.scene.add.text(920, 30, 'Current score:', { fill: '#0f0' });
+        this.currentScoreText = this.scene.add.text(610, 30, `Score:\n\n10`, { fill: '#0f0'});
     }
 
 
     update(ammoCount) {
-        console.log(ammoCount)
         this.ammoCounter.updateAmmoCount(ammoCount);
     }
 }
