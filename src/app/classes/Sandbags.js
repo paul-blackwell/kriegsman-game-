@@ -9,7 +9,11 @@ export default class Sandbags extends Phaser.GameObjects.Sprite {
             'sandbags',
         );
 
+        this.scene = scene;
         this.health = health;
+        this.state = {
+            sandbagsFadedOut: false
+        }
 
         // Add game object to the scene
         scene.add.existing(this)
@@ -53,6 +57,24 @@ export default class Sandbags extends Phaser.GameObjects.Sprite {
             case (health < 20 && health > 1):
                 this.setFrame(4)
                 break;
+            case (health < 1 && !this.state.sandbagsFadedOut):
+                this.state.sandbagsFadedOut = true;
+
+                // Add fadeout 
+                const timeline = this.scene.tweens.createTimeline();
+
+                timeline.add({
+                    targets: this,
+                    alpha: 0,
+                    ease: 'Power1',
+                    duration: 1000
+                });
+
+                // Play fadeout 
+                timeline.play();
+
+                console.log('should only fire one time')
+                break;
         }
     }
 
@@ -60,11 +82,10 @@ export default class Sandbags extends Phaser.GameObjects.Sprite {
 
     damageSandBags() {
         /**
-         * Destroy sandbags if they have no health and
+         * If sandbags have no heath and
          * break out of this method 
          */
         if (this.health <= 0) {
-            this.destroy();
             return;
         }
 

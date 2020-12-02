@@ -2,17 +2,20 @@ import Phaser from 'phaser';
 
 import config from '../phaser/config';
 
+import GUI from '../classes/GUI';
 import Sandbags from '../classes/Sandbags';
 import TankTrap from '../classes/TankTrap';
 import Player from '../classes/Player';
 import Enemy from '../classes/Enemy';
 
-import getRandomNumber from '../utils/getRandomNumber';
-
 export default class Scene2 extends Phaser.Scene {
 
     constructor() {
         super('playGame');
+
+        this.state = {
+            gameOver: false
+        }
     }
 
     init(data) {
@@ -28,22 +31,25 @@ export default class Scene2 extends Phaser.Scene {
         // Add foreground
         this.foreground = this.add.image(this.cameras.main.width / 2, config.height - 205, 'foreground');
 
-        // Add tank traps
-        // this.tankTrap1 = new TankTrap(this, 400, 300);
-        // this.tankTrap2 = new TankTrap(this, 100, 400);
-        // this.tankTrap2 = new TankTrap(this, 400, 500);
-        // this.tankTrap4 = new TankTrap(this, 600, 600);
-    
+        // Add GUI
+        this.gui = new GUI(this, this.cameras.main.width / 2, config.height - 320, 5);
 
+
+        // Add tank traps
+        this.tankTrap1 = new TankTrap(this, 700);
+        this.tankTrap2 = new TankTrap(this, 100);
+        this.tankTrap2 = new TankTrap(this, 400);
 
         // And Sandbags
         this.sandbags = new Sandbags(this, 100);
 
-        // Add player
-        // Set position[x,y], defaultSprite, defaultAnimation, health, scene
-        // set default sprite and play it
-        this.player = new Player([config.width - 100, config.height - 200], 'playerIdle', 'player_idle_animation', 100, this);
-        this.player.playDefaultAnimation();
+
+        // Make Player
+        this.player = new Player(this);
+
+        // Make enemies using the makeEnemies method based on difficulty
+        this.enemies = this.makeEnemies(this.difficulty);
+     
 
         // Make variable to listen for cursor keys
         this.cursorKeys = this.input.keyboard.createCursorKeys();
@@ -54,49 +60,58 @@ export default class Scene2 extends Phaser.Scene {
         //  Make variable to listen for "R" key so player can reload
         this.rKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
-
         // This will hold all the 'bullet' Instances in the scene 
         this.activeBullets = [];
 
-        // Make enemies using the makeEnemies method based on difficulty
-        this.enemies = this.makeEnemies(this.difficulty);
 
-
-        // This will Loop over enemies and add overlay between them and the bullets
+        /**
+         * This will Loop over enemies and add overlap between them and the bullets
+         * and overlap between them and the sandbags so they can interact.
+         */
         this.enemies.forEach(enemy => {
-
-
             // add overlap between enemies and bullets
-            this.physics.add.overlap(enemy.character, this.activeBullets, () => {
+            this.physics.add.overlap(enemy, this.activeBullets, () => {
+
                 /**
                  * Check the enemy health as we don't want to destroy,
                  * the bullet if the enemy is already dead, we have to do this
                  * because the enemies take one second to fade off the screen
                  */
                 if (enemy.health > 0) {
+
                     // If bullet hits enemy run enemy hit method
                     enemy.enemyHit();
+
                     // Destroy the bullet  (Note this will destroy all bullets, works for now but will need to be changed)
                     this.activeBullets.forEach(bullet => {
                         bullet.destroy();
                     });
+
                 }
-            }, null, this);
-            
 
-            // Make enemies stop and attack when they get to the sandbags 
-            this.physics.add.overlap(enemy.character, this.sandbags, () => {
-                    enemy.enemyAttack();
-                    this.sandbags.damageSandBags();
             }, null, this);
 
+            //Make enemies stop and attack when they get to the sandbags 
+            this.physics.add.overlap(enemy, this.sandbags, () => {
 
+                if (this.sandbags.health <= 0) {
+                    this.state.gameOver = true;  // If the sandbags have no heath end the game
+                    return;
+                }
+
+                enemy.enemyAttack();
+                this.sandbags.damageSandBags();
+            }, null, this);
         });
 
     }
 
 
-    // Will use this method to make the enemies for each game
+    /**
+     * This will add instances of enemies to enemies
+     *  array depending on the difficulty
+     * @param {Strings 'easy, hard', will set the number of enemy loaded into the scene} difficulty 
+     */
     makeEnemies(difficulty) {
 
         // Make enemies array 
@@ -104,10 +119,9 @@ export default class Scene2 extends Phaser.Scene {
 
         const makeEnemies = (numberOfEnemies) => {
             for (let i = 0; i < numberOfEnemies; i++) {
-                // Set position[x,y], defaultSprite, defaultAnimation, health, scene
-                const enemy = new Enemy([100, getRandomNumber(250, 550)], 'enemyIdle', 'enemy_idle_animation', 100, this);
-                enemy.enemyRun();
-                //enemies.add(enemy);
+
+                // Make new enemys and push to the enemies array
+                const enemy = new Enemy(this, 100);
                 enemies.push(enemy);
             }
         }
@@ -123,6 +137,26 @@ export default class Scene2 extends Phaser.Scene {
         return enemies;
     }
 
+
+
+    gameOver() {
+        // make all enemies run again
+        this.enemies.forEach(enemy => {
+            enemy.enemyRun();
+        });
+
+        // set game over state to false as you only wan this to run one time
+        this.state.gameOver = false;
+
+        // After one second go to scene 3
+        setTimeout(() => {
+            this.scene.start('endGame');
+        }, 1000)
+
+    }
+
+
+
     update() {
 
         // Shoot gun when spacebar is pressed
@@ -136,31 +170,33 @@ export default class Scene2 extends Phaser.Scene {
         }
 
 
-
         // Move player on up and down keys
-        if (this.cursorKeys.up.isDown && this.player.character.y > 320) {
+        if (this.cursorKeys.up.isDown && this.player.y > 300) {
             this.player.movePlayer('up');
-        } else if (this.cursorKeys.down.isDown && this.player.character.y < 540) {
+        } else if (this.cursorKeys.down.isDown && this.player.y < 540) {
             this.player.movePlayer('down');
         } else {
             this.player.movePlayer('stop');
         }
 
 
-
-
         /**
-         * Run the update of each bullet instance (they are stored 
-         * in the activeBullets array). This will destroy them once they
-         * get 50px from the left edge of the screen. 
-         * If we don't do this each bullet will cause performance problems as 
-         * they will go on forever.
-         * 
-         * check note on Bullet classes update method for more info 
-         */
+       * Run the update of each bullet instance (they are stored 
+       * in the activeBullets array). This will destroy them once they
+       * get 50px from the left edge of the screen. 
+       * If we don't do this each bullet will cause performance problems as 
+       * they will go on forever.
+       * 
+       * check note on Bullet classes update method for more info 
+       */
         this.activeBullets.forEach(bullet => {
             bullet.update();
         });
+
+
+        if (this.state.gameOver) {
+            this.gameOver();
+        }
 
 
     }

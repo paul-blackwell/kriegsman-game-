@@ -61,7 +61,7 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
          * problems
          */
         // was 50
-        if (this.x < 100) {
+        if (this.x < 60) {
             this.destroy();
         }
     }

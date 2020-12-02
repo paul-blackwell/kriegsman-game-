@@ -3,7 +3,8 @@ import Phaser from 'phaser';
 // Images
 import background from '../../assets/images/background.png'
 import foreground from '../../assets/images/foreground.png';
-
+import GUI from '../../assets/images/GUI.png';
+import commissar from '../../assets/images/krieg-commissar-upper-body.png';
 
 // Spites
 import sandbags from '../../assets/spritesheets/sandbags-sprite-sheet.png';
@@ -33,9 +34,12 @@ export default class Scene1 extends Phaser.Scene {
         // Image for foreground
         this.load.image('foreground', foreground);
 
-       
-        // Just for testing
-        //this.load.image('sandbags', sandbags);
+        // Image for GUI
+        this.load.image('GUI', GUI);
+
+        // Image for commissar
+        this.load.image('commissar', commissar);
+
 
        // Sandbag spritesheet
         this.load.spritesheet('sandbags', sandbags, {
@@ -113,15 +117,6 @@ export default class Scene1 extends Phaser.Scene {
 
         // Just for testing
         this.cameras.main.setBackgroundColor('#040C06');
-
-        
-        // Sandbag animation 
-        // this.anims.create({
-        //     key: 'sandbag_animation',
-        //     frames: this.anims.generateFrameNumbers('sandbags', {frames: [ 0, 1, 2, 3, 4, 5]}), 
-        //     frameRate: 16,
-        // });
-
 
 
         // Animation of the player idle

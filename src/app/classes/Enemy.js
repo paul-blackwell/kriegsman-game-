@@ -1,22 +1,18 @@
 import Character from './Character';
-
 import getRandomNumber from '../utils/getRandomNumber';
 
 export default class Enemy extends Character {
 
 
-    constructor(position, defaultSprite, defaultAnimation, health, scene) {
+    constructor(scene, health) {
 
         /**
          * Note we are also inheriting the animations from the scene,
          * as we have already preloaded them 
          */
         super(
-            position,
-            defaultSprite,
-            defaultAnimation,
-            health,
             scene,
+            health,
             'enemyRunning',
             'enemyAttacking',
             'enemyShotChest',
@@ -26,66 +22,104 @@ export default class Enemy extends Character {
         );
 
 
+
+        // Add game object to the scene
+        scene.add.existing(this)
+
+
+        // Add physics
+        scene.physics.world.enableBody(this);
+
+
+
         this.scene = scene;
-        this.position = position;
+        this.health = health;
 
         this.state = {
             isEnemyAttacking: false,
         }
 
-        /**
-         * This will stop the enemy from overlapping other enemies depending on 
-         * its y axis (looks bad if we don't do this)
-         */
 
-        const y = this.position[1];
-        switch (true) {
-            case (y < 300):
-                this.character.depth = 0;
-                break;
-            case (y < 350):
-                this.character.depth = 1;
-                break;
-            case (y < 400):
-                this.character.depth = 2;
-                break;
-            case (y < 450):
-                this.character.depth = 3;
-                break;
-            case (y < 500):
-                this.character.depth = 4;
-                break;
-            case (y < 550):
-                this.character.depth = 5;
-                break;
-        }
+        // Just for testing
+        this.playNewAnimation('enemyRunning', 'enemy_running_animation');
 
 
-        // Change  bounding box size of enemies
-        this.character.setSize(70, 140, true);
+        // Set starting x position
+        this.x = -100;
+
+        //  Set starting y position and set zindex, 
+        this.setStartingPosition();
+
 
         // Make enemy interactive
         this.setInteractive();
-        this.character.setInteractive()
 
+
+        // Change  bounding box size of enemies
+        this.body.setSize(70, 140, true);
+
+
+        /**
+         * Make enemy run by default but only after 4 seconds as 
+         * their is text in the GUI we want the player to read
+         */
+        setTimeout(() => {
+            this.enemyRun();
+        }, 4000)
     }
 
+    /**
+     * This will make the enemy run
+     * @param {Default argument is between 10 and 40 but 0 will stop the enemy from moving} speed 
+     */
     enemyRun(speed = getRandomNumber(10, 40)) {
         this.playNewAnimation('enemyRunning', 'enemy_running_animation');
-
-        this.character.body.velocity.x = `+${speed}`;
+        this.body.velocity.x = `+${speed}`;
     }
 
 
+
+    setStartingPosition() {
+        /**
+        * Set starting y position and set zindex, 
+        * this is to stop the enemies overlapping in the wrong order and 
+        * will help us when we add our tank traps
+        */
+        const startingPosition = getRandomNumber(1, 4);
+        switch (true) {
+            case (startingPosition === 1):
+                this.y = 300;
+                this.depth = 1;
+                break;
+            case (startingPosition === 2):
+                this.y = 400;
+                this.depth = 2;
+                break;
+            case (startingPosition === 3):
+                this.y = 500;
+                this.depth = 3;
+                break;
+            case (startingPosition === 4):
+                this.y = 540;
+                this.depth = 6;
+                break;
+        }
+    }
+
+
+    /**
+     * This method will allow the enemies to attack
+     * the sandbags 
+     */
     enemyAttack() {
 
         /**
-         * Because this method will run inside the update method, 
-         * we need to check the state for isEnemyAttacking. The first time 
+         * This method will run inside the update method, 
+         * because of this we need to check the state for isEnemyAttacking. The first time 
          * the update method runs this will be false but after that, enemyRun
          *  will not fire because if it does we will not be able to run the 
          * playNewAnimation method as enemyRun will constantly be running. Also
-         * check the enemy health is greater that 0  as they can't attack if 
+         * check the enemy health is greater that 0 as they can't attack if 
          * they are dead
          */
         if (!this.state.isEnemyAttacking && this.health >= 0) {
@@ -101,11 +135,14 @@ export default class Enemy extends Character {
         this.state.isEnemyAttacking = true;
 
         this.playNewAnimation('enemyAttacking', 'enemy_attacking_animation');
-
     }
 
 
 
+    /**
+     * This play an new animation and reset the
+     * enemy once they are hit by a bullet
+     */
     enemyHit() {
 
         /**
@@ -117,7 +154,7 @@ export default class Enemy extends Character {
         }
 
         // Make hitbox temporarily really small , to stop it interacting with the sandbags
-        this.character.body.setSize(1, 1, true);
+        this.body.setSize(1, 1, true);
 
         // Subtract 100 
         this.health = this.health - 100;
@@ -132,25 +169,26 @@ export default class Enemy extends Character {
         const timeline = this.scene.tweens.createTimeline();
 
         timeline.add({
-            targets: this.character,
+            targets: this,
             alpha: 0,
             ease: 'Power1',
             duration: 50
         });
         timeline.add({
-            targets: this.character,
+            targets: this,
             alpha: 1,
             ease: 'Power1',
             duration: 50
         });
 
         timeline.add({
-            targets: this.character,
+            targets: this,
             alpha: 0,
             ease: 'Power1',
             duration: 1000
         });
 
+        // Play fadeout 
         timeline.play();
 
         // Reset enemy
@@ -159,26 +197,30 @@ export default class Enemy extends Character {
 
 
 
+    /**
+     * Will reset the enemy health and position
+     */
     resetEnemy() {
 
         setTimeout(() => {
             // Reset enemy position, health, is they are attacking and make enemy run
-            this.character.x = -100;
+            this.setStartingPosition();
+            this.x = -100;
             this.health = 100;
             this.state.isEnemyAttacking = false;
             this.enemyRun();
 
             // Reset hitbox size
-            this.character.body.setSize(70, 140, true);
+            this.body.setSize(70, 140, true);
 
             /**
              * Set alpha to 1 so we can see the enemy again
              *  but had to use a tween as just setting the alpha to 1
-             * (this.character.alpha = 1) didn't work
+             * (this.alpha = 1) didn't work
              */
             const timeline = this.scene.tweens.createTimeline();
             timeline.add({
-                targets: this.character,
+                targets: this,
                 alpha: 1,
                 ease: 'Power1',
                 duration: 50
