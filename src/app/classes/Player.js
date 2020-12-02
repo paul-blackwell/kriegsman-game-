@@ -28,7 +28,7 @@ export default class Player extends Character {
         this.state = {
             isPlayerShooting: false,
             isPlayerReloading: false,
-            playerAmmunitionCount: 5,
+            playerAmmoCount: 6,
         }
 
         // Add game object to the scene
@@ -91,7 +91,7 @@ export default class Player extends Character {
         }
 
         // Check player amo count, if 0 reload and break out of this method 
-        if (this.state.playerAmmunitionCount === 0) {
+        if (this.state.playerAmmoCount === 0) {
             this.playerReload();
             return;
         }
@@ -101,7 +101,7 @@ export default class Player extends Character {
         this.state.isPlayerShooting = true;
 
         // Subtract one from the amo count
-        this.state.playerAmmunitionCount--;
+        this.state.playerAmmoCount--;
 
 
         /**
@@ -135,8 +135,8 @@ export default class Player extends Character {
         // Set isPlayerReloading to true
         this.state.isPlayerReloading = true;
 
-        // Reset playerAmmunitionCount to 5
-        this.state.playerAmmunitionCount = 5;
+        // Reset playerAmmoCount to 6
+        this.state.playerAmmoCount = 6;
 
 
         // Set timeout so the player can reload again after 1 second

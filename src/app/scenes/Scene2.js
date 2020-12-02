@@ -8,13 +8,16 @@ import TankTrap from '../classes/TankTrap';
 import Player from '../classes/Player';
 import Enemy from '../classes/Enemy';
 
+
 export default class Scene2 extends Phaser.Scene {
 
     constructor() {
         super('playGame');
 
         this.state = {
-            gameOver: false
+            gameOver: false,
+            ammoCount: 6,
+            score: 0
         }
     }
 
@@ -32,7 +35,7 @@ export default class Scene2 extends Phaser.Scene {
         this.foreground = this.add.image(this.cameras.main.width / 2, config.height - 205, 'foreground');
 
         // Add GUI
-        this.gui = new GUI(this, this.cameras.main.width / 2, config.height - 320, 5);
+        this.gui = new GUI(this, this.cameras.main.width / 2, config.height - 320, this.state.ammoCount);
 
 
         // Add tank traps
@@ -49,7 +52,7 @@ export default class Scene2 extends Phaser.Scene {
 
         // Make enemies using the makeEnemies method based on difficulty
         this.enemies = this.makeEnemies(this.difficulty);
-     
+
 
         // Make variable to listen for cursor keys
         this.cursorKeys = this.input.keyboard.createCursorKeys();
@@ -81,6 +84,10 @@ export default class Scene2 extends Phaser.Scene {
 
                     // If bullet hits enemy run enemy hit method
                     enemy.enemyHit();
+
+                    // Add 10 to score
+                    this.state.score += 10;
+                    console.log(this.state.score)
 
                     // Destroy the bullet  (Note this will destroy all bullets, works for now but will need to be changed)
                     this.activeBullets.forEach(bullet => {
@@ -162,11 +169,21 @@ export default class Scene2 extends Phaser.Scene {
         // Shoot gun when spacebar is pressed
         if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
             this.player.playerShoot();
+            /**
+             * Set the state to the player ammo count, we will need 
+             * to do this to update the ammo counter in the GUI
+             */
+            this.state.ammoCount = this.player.state.playerAmmoCount;
         }
 
         // Reload gun when "r" key is pressed 
         if (Phaser.Input.Keyboard.JustDown(this.rKey)) {
             this.player.playerReload();
+            /**
+            * Set the state to the player ammo count, we will need 
+            * to do this to update the ammo counter in the GUI
+            */
+            this.state.ammoCount = this.player.state.playerAmmoCount;
         }
 
 
@@ -194,11 +211,15 @@ export default class Scene2 extends Phaser.Scene {
         });
 
 
+        // This will end game is state set to true
         if (this.state.gameOver) {
             this.gameOver();
         }
 
-
+        /**
+         * Run the update function in the GUI and pass the this.state.ammoCount as an argument 
+         */
+        this.gui.update(this.state.ammoCount);
     }
 
 

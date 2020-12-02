@@ -1,24 +1,31 @@
 import Phaser from 'phaser';
 
+import AmmoCounter from '../classes/AmmoCounter';
+
 export default class GUI extends Phaser.GameObjects.Sprite {
-    constructor(scene, x, y, amoCount) {
+    constructor(scene, x, y, ammoCount) {
         super(
             scene,
             x,
             y,
-            amoCount,
+            ammoCount,
             'GUI',
             'commissar',
         );
 
         this.scene = scene;
+        this.ammoCount = ammoCount;
 
         // Add background image
         this.scene.add.image(x, y, 'GUI');
 
 
+        // Add ammoCount
+        this.ammoCounter = new AmmoCounter(this.scene, ammoCount);
+        this.ammoCounter.updateAmmoCount();
 
         this.addCommissar();
+        this.currentAmmo();
     }
 
 
@@ -35,7 +42,7 @@ export default class GUI extends Phaser.GameObjects.Sprite {
         this.commissarImage.alpha = 0;
         this.commissarHeading.alpha = 0;
         this.commissarText1.alpha = 0;
-        this.commissarText1.alpha = 0;
+        this.commissarText2.alpha = 0;
 
 
         // Add fadeoutIn
@@ -49,7 +56,7 @@ export default class GUI extends Phaser.GameObjects.Sprite {
         });
 
         timeline.add({
-            targets:  this.commissarHeading,
+            targets: this.commissarHeading,
             alpha: 1,
             ease: 'Power1',
             duration: 1000
@@ -81,7 +88,19 @@ export default class GUI extends Phaser.GameObjects.Sprite {
 
     }
 
-    currentScore(){
-        
+
+    currentAmmo() {
+        this.currentAmoText = this.scene.add.text(1030, 30, `Ammunition:`, { fill: '#0f0' });
+    }
+
+
+    currentScore() {
+        this.currentScoreText = this.scene.add.text(920, 30, 'Current score:', { fill: '#0f0' });
+    }
+
+
+    update(ammoCount) {
+        console.log(ammoCount)
+        this.ammoCounter.updateAmmoCount(ammoCount);
     }
 }

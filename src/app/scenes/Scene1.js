@@ -18,6 +18,7 @@ import enemyRunning from '../../assets/spritesheets/cultist-animated-running-spr
 import enemyAttacking from '../../assets/spritesheets/cultist-animated-attacking-sprite.png';
 import enemyShotChest from '../../assets/spritesheets/cultist-animated-shot-in-chest-sprite.png';
 import bullet from '../../assets/spritesheets/bullet-sprite.png';
+import ammoCounter from '../../assets/spritesheets/ammo-counter-sprite-sheet.png';
 
 
 export default class Scene1 extends Phaser.Scene {
@@ -107,6 +108,12 @@ export default class Scene1 extends Phaser.Scene {
         // Spritesheet for bullet
         this.load.spritesheet('bullet', bullet, {
             frameWidth: 32,
+            frameHeight: 32,
+        });
+
+          // Spritesheet for ammo counter
+          this.load.spritesheet('ammoCounter', ammoCounter, {
+            frameWidth: 96,
             frameHeight: 32,
         });
 
