@@ -99,8 +99,6 @@ export default class GUI extends Phaser.GameObjects.Sprite {
 
 
 
-
-
     update(ammoCount, score) {
         // Update ammo counter count, this will update the bullets shown on the counter
         this.ammoCounter.updateAmmoCount(ammoCount);

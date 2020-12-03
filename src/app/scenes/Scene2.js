@@ -155,9 +155,9 @@ export default class Scene2 extends Phaser.Scene {
         // set game over state to false as you only wan this to run one time
         this.state.gameOver = false;
 
-        // After one second go to scene 3
+        // After one second go to scene 3 and pass the players score
         setTimeout(() => {
-            this.scene.start('endGame');
+            this.scene.start('endGame', {score: this.state.score});
         }, 1000)
 
     }
