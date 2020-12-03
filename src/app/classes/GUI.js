@@ -3,31 +3,33 @@ import Phaser from 'phaser';
 import AmmoCounter from '../classes/AmmoCounter';
 
 export default class GUI extends Phaser.GameObjects.Sprite {
-    constructor(scene, x, y, ammoCount) {
+    constructor(scene, x, y) {
         super(
             scene,
             x,
             y,
-            ammoCount,
             'GUI',
             'commissar',
         );
 
         this.scene = scene;
-        this.ammoCount = ammoCount;
+
 
         // Add background image
         this.scene.add.image(x, y, 'GUI');
 
 
         // Add ammoCount
-        this.ammoCounter = new AmmoCounter(this.scene, ammoCount);
-        this.ammoCounter.updateAmmoCount();
+        this.ammoCounter = new AmmoCounter(this.scene);
 
+
+        // Add commissar
         this.addCommissar();
-        this.currentAmmo();
+        this.addCurrentAmmoText();
 
-        this.currentScore();
+        // Add score text
+        this.currentScoreText = this.scene.add.text(610, 30, 'Score:', { fill: '#0f0' });
+
     }
 
 
@@ -91,17 +93,20 @@ export default class GUI extends Phaser.GameObjects.Sprite {
     }
 
 
-    currentAmmo() {
+    addCurrentAmmoText() {
         this.currentAmoText = this.scene.add.text(1030, 30, 'Ammunition:', { fill: '#0f0' });
     }
 
 
-    currentScore() {
-        this.currentScoreText = this.scene.add.text(610, 30, `Score:\n\n10`, { fill: '#0f0'});
-    }
 
 
-    update(ammoCount) {
+
+    update(ammoCount, score) {
+        // Update ammo counter count, this will update the bullets shown on the counter
         this.ammoCounter.updateAmmoCount(ammoCount);
+
+        // Update score text
+        this.currentScoreText.setText(`Score:\n\n${score}`);
+
     }
 }

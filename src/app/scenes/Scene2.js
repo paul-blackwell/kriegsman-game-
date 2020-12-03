@@ -217,9 +217,10 @@ export default class Scene2 extends Phaser.Scene {
         }
 
         /**
-         * Run the update function in the GUI and pass the this.state.ammoCount as an argument 
+         * Run the update function in the GUI and pass the this.state.ammoCount and 
+         * this.state.score as an argument 
          */
-        this.gui.update(this.state.ammoCount);
+        this.gui.update(this.state.ammoCount, this.state.score);
     }
 
 
