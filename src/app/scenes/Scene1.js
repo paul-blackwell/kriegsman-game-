@@ -21,6 +21,8 @@ import bullet from '../../assets/spritesheets/bullet-sprite.png';
 import ammoCounter from '../../assets/spritesheets/ammo-counter-sprite-sheet.png';
 
 
+
+
 export default class Scene1 extends Phaser.Scene {
 
     constructor() {
@@ -122,6 +124,7 @@ export default class Scene1 extends Phaser.Scene {
 
     create() {
 
+       
         // Just for testing
         this.cameras.main.setBackgroundColor('#040C06');
 

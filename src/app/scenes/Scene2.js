@@ -28,6 +28,7 @@ export default class Scene2 extends Phaser.Scene {
 
     create() {
 
+    
         // Add background
         this.background = this.add.image(this.cameras.main.width / 2, config.height - 520, 'background');
 
@@ -87,7 +88,6 @@ export default class Scene2 extends Phaser.Scene {
 
                     // Add 10 to score
                     this.state.score += 10;
-                    console.log(this.state.score)
 
                     // Destroy the bullet  (Note this will destroy all bullets, works for now but will need to be changed)
                     this.activeBullets.forEach(bullet => {
@@ -157,7 +157,7 @@ export default class Scene2 extends Phaser.Scene {
 
         // After one second go to scene 3 and pass the players score
         setTimeout(() => {
-            this.scene.start('endGame', {score: this.state.score});
+            this.scene.start('endGame', { score: this.state.score });
         }, 1000)
 
     }
@@ -213,6 +213,8 @@ export default class Scene2 extends Phaser.Scene {
 
         // This will end game is state set to true
         if (this.state.gameOver) {
+
+            // End game
             this.gameOver();
         }
 
