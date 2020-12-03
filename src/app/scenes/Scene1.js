@@ -227,9 +227,13 @@ export default class Scene1 extends Phaser.Scene {
         // https://www.youtube.com/watch?v=S1VSKkL_ePM&t=149s
 
         // Difficulty buttons
-        const difficultyButton = this.add.text(100, 140, 'Easy', { fill: '#0f0' });
-        difficultyButton.setInteractive();
-        difficultyButton.on('pointerdown', () => this.scene.start('playGame', { difficulty: 'easy' }));
+        const difficultyEasyButton = this.add.text(100, 140, 'Easy', { fill: '#0f0' });
+        difficultyEasyButton.setInteractive();
+        difficultyEasyButton.on('pointerdown', () => this.scene.start('playGame', { difficulty: 'easy' }));
+
+        const difficultyHardButton = this.add.text(100, 180, 'Hard', { fill: '#0f0' });
+        difficultyHardButton.setInteractive();
+        difficultyHardButton.on('pointerdown', () => this.scene.start('playGame', { difficulty: 'hard' }));
 
     }
 }

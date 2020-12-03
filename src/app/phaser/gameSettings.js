@@ -1,3 +1,5 @@
+
+// 200
 const gameSettings = {
     playerSpeed: 200,
 }
