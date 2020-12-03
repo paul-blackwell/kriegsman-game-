@@ -27,6 +27,7 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
         
 
         // Set the bullets position just above the players rifle
+        // 100
         this.x = x - 100;
         this.y = y - 50;
 

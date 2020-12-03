@@ -20,7 +20,11 @@ import enemyShotChest from '../../assets/spritesheets/cultist-animated-shot-in-c
 import bullet from '../../assets/spritesheets/bullet-sprite.png';
 import ammoCounter from '../../assets/spritesheets/ammo-counter-sprite-sheet.png';
 
-
+// Audio
+//import backgroundMusic from '../../assets/audio/background-music.mp3';
+import gunShot from '../../assets/audio/gun-shot.mp3';
+import reloadSound from '../../assets/audio/reload-sound.mp3';
+import bulletHit from '../../assets/audio/bullet-hit.mp3';
 
 
 export default class Scene1 extends Phaser.Scene {
@@ -43,14 +47,25 @@ export default class Scene1 extends Phaser.Scene {
         // Image for commissar
         this.load.image('commissar', commissar);
 
+        // Background Audio 
+        //this.load.audio('background_music_audio', [backgroundMusic]);
 
-       // Sandbag spritesheet
+        // Load Gunshot Audio 
+        this.load.audio('gunshot_audio', [gunShot]);
+
+        // Load reload audio
+        this.load.audio('reload_audio', [reloadSound]);
+
+        // Load bullet hit audio
+        this.load.audio('bullet_hit_audio', [bulletHit]);
+
+        // Sandbag spritesheet
         this.load.spritesheet('sandbags', sandbags, {
             frameWidth: 256,
             frameHeight: 384,
         });
 
-        
+
         // tankTrap spritesheet
         this.load.spritesheet('tankTrap', tankTrap, {
             frameWidth: 160,
@@ -113,8 +128,8 @@ export default class Scene1 extends Phaser.Scene {
             frameHeight: 32,
         });
 
-          // Spritesheet for ammo counter
-          this.load.spritesheet('ammoCounter', ammoCounter, {
+        // Spritesheet for ammo counter
+        this.load.spritesheet('ammoCounter', ammoCounter, {
             frameWidth: 96,
             frameHeight: 32,
         });
@@ -124,7 +139,7 @@ export default class Scene1 extends Phaser.Scene {
 
     create() {
 
-       
+
         // Just for testing
         this.cameras.main.setBackgroundColor('#040C06');
 

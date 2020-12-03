@@ -153,6 +153,21 @@ export default class Enemy extends Character {
             return;
         }
 
+         // Add audio 
+         this.bulletHitAudio = this.scene.sound.add('bullet_hit_audio');
+
+         const musicConfig = {
+             mute: false,
+             volume: 1,
+             rate: 1,
+             detune: 0,
+             seek: 0,
+             loop: false,
+             delay: 0
+         }
+ 
+         this.bulletHitAudio.play(musicConfig);
+
         // Make hitbox temporarily really small , to stop it interacting with the sandbags
         this.body.setSize(1, 1, true);
 

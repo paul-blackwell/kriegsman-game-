@@ -20,6 +20,10 @@ module.exports = {
                 use: 'raw-loader',
             },
             {
+                test: /\.mp3$/,
+                loader: 'file-loader'
+            },
+            {
                 test: /\.(svg|png|jpg|gif)$/,
                 use: {
                     loader: "file-loader",

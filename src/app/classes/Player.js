@@ -103,6 +103,20 @@ export default class Player extends Character {
         // Subtract one from the amo count
         this.state.playerAmmoCount--;
 
+        // Add audio 
+        this.gunShotAudio = this.scene.sound.add('gunshot_audio');
+
+        const musicConfig = {
+            mute: false,
+            volume: 1,
+            rate: 1,
+            detune: 0,
+            seek: 0,
+            loop: false,
+            delay: .3
+        }
+
+        this.gunShotAudio.play(musicConfig);
 
         /**
        *  Add new bullet but after 500 milliseconds as we want the player to shoulder the rifle
@@ -122,15 +136,30 @@ export default class Player extends Character {
     }
 
 
-     /**
-     * This will allow the player to reload
-     */
+    /**
+    * This will allow the player to reload
+    */
     playerReload() {
 
         // Do nothing if the player is shooting or reloading
         if (this.state.isPlayerShooting || this.state.isPlayerReloading) {
             return;
         }
+
+        // Add audio 
+        this.reloadAudio = this.scene.sound.add('reload_audio');
+
+        const musicConfig = {
+            mute: false,
+            volume: 1,
+            rate: 1,
+            detune: 0,
+            seek: 0,
+            loop: false,
+            delay: .2
+        }
+
+        this.reloadAudio.play(musicConfig);
 
         // Set isPlayerReloading to true
         this.state.isPlayerReloading = true;

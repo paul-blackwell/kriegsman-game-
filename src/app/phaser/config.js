@@ -8,6 +8,9 @@ const config = {
     backgroundColor: 0x000000,
     scene: [Scene1, Scene2, Scene3],
     pixelArt: true,
+    audio: {
+        disableWebAudio: true
+    },
     physics: {
         default: 'arcade',
         arcade: {
