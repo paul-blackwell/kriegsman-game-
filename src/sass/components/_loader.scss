@@ -1,5 +1,8 @@
 .loader {
-    background-color: #000;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-800);
     height: 100vh;
     width: 100vw;
     grid-row: 1;
@@ -7,7 +10,25 @@
     z-index: 1000;
 
 
-    &__icon {
+    &__container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
+    &__icon {
+        //margin: 0 auto;
+        width: 10rem;
+        height: 10rem;
+        border: .8rem solid var(--primary-400);
+        border-radius: 50%;
+        border-top-color: var(--primary-500);
+        border-bottom-color: var(--primary-500);
+        animation: loaderSpin 1.4s linear infinite;
+    }
+
+    &__text{
+        color: var(--font-primary-100);
+        margin: 2rem 0;
     }
 }

@@ -1,13 +1,24 @@
 // Primary
-$primarySoftBlue: hsl(231, 69%, 60%);
-$primarySoftRed: hsl(0, 94%, 66%);
+:root {
+    --primary-100: #EEFFCC;
+    --primary-200: #BEDC7F;  
+    --primary-300: #89A257; 
+    --primary-400: #4D8061; 
+    --primary-500: #305D42; 
+    --primary-600: #1E3A29; 
+    --primary-700: #112318; 
+    --primary-800: #040C06;  
 
-// Neutral
-$neutralGrayishBlue: hsl(229, 8%, 60%);
-$neutralDarkBlue: hsl(229, 31%, 21%);
-$neutralWhite: rgb(255, 255, 255);
+    --gray-100: #57605D;
+    --gray-200: #3E4747;
+    --gray-300: #2F3937;
+
+    --font-primary-100: #0f0;
+}
 
 // Fonts
 $default-font-size: 1.6rem;
+
+
 
 
