@@ -142,8 +142,16 @@ export default class Scene1 extends Phaser.Scene {
     create() {
 
 
-        // Just for testing
-        console.log(this.textures.exists('ammoCounter'));
+        /**
+         * We need to check the last asset in this case a spritesheet,
+         * to see if the preload has finished, then hide the loader.
+         * I don't like this solution but all the Phaser.js examples
+         * I could find used a timeout function and I didn't want to 
+         * do that, as some assets may take loader than the timeout 
+         */
+        if(this.textures.exists('ammoCounter')) {
+            document.querySelector('.loader').classList.add('loader--hide');
+        }
 
 
 
