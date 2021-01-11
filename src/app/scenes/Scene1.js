@@ -137,7 +137,14 @@ export default class Scene1 extends Phaser.Scene {
 
     }
 
+
+    
     create() {
+
+
+        // Just for testing
+        console.log(this.textures.exists('ammoCounter'));
+
 
 
         // Just for testing
