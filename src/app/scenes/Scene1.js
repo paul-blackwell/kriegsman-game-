@@ -147,7 +147,7 @@ export default class Scene1 extends Phaser.Scene {
 
 
 
-        // Just for testing
+        // Set background colour 
         this.cameras.main.setBackgroundColor('#040C06');
 
 
