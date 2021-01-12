@@ -28,8 +28,16 @@
     }
 
     &__text{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
         color: var(--font-primary-100);
         margin: 2rem 0;
+    }
+
+    &__span {
+
     }
 }
 
