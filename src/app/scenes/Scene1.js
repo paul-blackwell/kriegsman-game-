@@ -156,7 +156,9 @@ export default class Scene1 extends Phaser.Scene {
         /**
          *  This will get the loader div and hide it
          */
-        document.querySelector('.loader').classList.add('loader--hide');
+        const loader = document.querySelector('.loader');
+        loader.classList.add('loader--hide');
+
 
 
         // Set background colour 
