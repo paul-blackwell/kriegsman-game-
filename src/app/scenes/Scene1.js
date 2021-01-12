@@ -149,10 +149,14 @@ export default class Scene1 extends Phaser.Scene {
          * I could find used a timeout function and I didn't want to 
          * do that, as some assets may take loader than the timeout 
          */
-        if(this.textures.exists('ammoCounter')) {
-            document.querySelector('.loader').classList.add('loader--hide');
-        }
+        // if(this.textures.exists('ammoCounter')) {
+        //     document.querySelector('.loader').classList.add('loader--hide');
+        // }
 
+        /**
+         *  This will get the loader div and hide it
+         */
+        document.querySelector('.loader').classList.add('loader--hide');
 
 
         // Set background colour 
