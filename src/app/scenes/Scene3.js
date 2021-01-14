@@ -45,6 +45,15 @@ export default class Scene3 extends Phaser.Scene {
         // Text for  player score
         this.playerScore = this.add.text(100, 160, `Your score: ${this.score}`, { fill: '#0f0' });
 
-    }
+        this.newGameHeading = this.add.text(100, 190, 'New Game:', { fill: '#0f0' });
 
+        const difficultyEasyButton = this.add.text(100, 220, 'Easy', { fill: '#0f0' });
+        difficultyEasyButton.setInteractive();
+        difficultyEasyButton.on('pointerdown', () => this.scene.start('playGame', { difficulty: 'easy' }));
+
+        const difficultyHardButton = this.add.text(100, 250, 'Hard', { fill: '#0f0' });
+        difficultyHardButton.setInteractive();
+        difficultyHardButton.on('pointerdown', () => this.scene.start('playGame', { difficulty: 'hard' }));
+    }
+    
 }

@@ -141,7 +141,6 @@ export default class Scene1 extends Phaser.Scene {
     
     create() {
 
-
         /**
          *  This will get the loader div and hide it
          */
