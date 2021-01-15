@@ -165,11 +165,14 @@ export default class Scene2 extends Phaser.Scene {
             enemy.enemyRun();
         });
 
-        // set game over state to false as you only wan this to run one time
+        // set game over state to false as you only want this to run one time
         this.state.gameOver = false;
+
 
         // After one second go to scene 3 and pass the players score
         setTimeout(() => {
+             // Stop background music otherwise it will play in scene 3
+            this.backgroundMusic.pause();
             this.scene.start('endGame', { score: this.state.score });
         }, 1000)
 
