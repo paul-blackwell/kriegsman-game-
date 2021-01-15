@@ -25,6 +25,9 @@ import backgroundMusic from '../../assets/audio/background-fx.mp3';
 import gunShot from '../../assets/audio/gun-shot.mp3';
 import reloadSound from '../../assets/audio/reload-sound.mp3';
 import bulletHit from '../../assets/audio/bullet-hit.mp3';
+import swordOne from '../../assets/audio/sword-Fx-1.mp3';
+import swordTwo from '../../assets/audio/sword-Fx-2.mp3';
+
 
 
 export default class Scene1 extends Phaser.Scene {
@@ -59,6 +62,11 @@ export default class Scene1 extends Phaser.Scene {
         // Load bullet hit audio
         this.load.audio('bullet_hit_audio', [bulletHit]);
 
+        // Load audio for sword hit one   
+        this.load.audio('sword_hit_one_audio', [swordOne]);
+
+         // Load audio for sword hit two   
+         this.load.audio('sword_hit_two_audio', [swordTwo]);
 
         // Sandbag spritesheet
         this.load.spritesheet('sandbags', sandbags, {
