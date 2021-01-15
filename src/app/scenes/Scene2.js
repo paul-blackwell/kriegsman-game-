@@ -28,7 +28,7 @@ export default class Scene2 extends Phaser.Scene {
 
     create() {
 
-    
+
         // Add background
         this.background = this.add.image(this.cameras.main.width / 2, config.height - 520, 'background');
 
@@ -39,22 +39,17 @@ export default class Scene2 extends Phaser.Scene {
         this.gui = new GUI(this, this.cameras.main.width / 2, config.height - 320, this.state.ammoCount);
 
         // Add background music
-        // this.backgroundMusic = this.sound.add('background_music_audio');
-
-        // const musicConfig = {
-        //     mute: false,
-        //     volume: 1,
-        //     rate: 1,
-        //     detune: 0,
-        //     seek: 0,
-        //     loop: true,
-        //     delay: 0
-        // }
-
-        // console.log(this.backgroundMusic)
-
-        //this.backgroundMusic.resume();
-        //this.backgroundMusic.play(musicConfig);
+        this.backgroundMusic = this.sound.add('background_music_audio');
+        this.backgroundMusic.resume();
+        this.backgroundMusic.play({
+            mute: false,
+            volume: 1,
+            rate: 1,
+            detune: 0,
+            seek: 0,
+            loop: true,
+            delay: 0
+        });
 
 
         // Add tank traps
