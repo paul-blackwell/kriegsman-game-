@@ -31,7 +31,6 @@ export default class Enemy extends Character {
         scene.physics.world.enableBody(this);
 
 
-
         this.scene = scene;
         this.health = health;
 
@@ -39,6 +38,8 @@ export default class Enemy extends Character {
             isEnemyAttacking: false,
         }
 
+        // Add sword hit sound effect 
+        this.swordHitOneAudio = this.scene.sound.add('sword_hit_one_audio');
 
         // Just for testing
         this.playNewAnimation('enemyRunning', 'enemy_running_animation');
@@ -134,6 +135,18 @@ export default class Enemy extends Character {
 
         this.state.isEnemyAttacking = true;
 
+        // play sword hit sound effect
+         this.swordHitOneAudio.resume();
+         this.swordHitOneAudio.play({
+             mute: false,
+             volume: 1,
+             rate: 1,
+             detune: 0,
+             seek: 0,
+             loop: true,
+             delay: 0.2
+         });
+
         this.playNewAnimation('enemyAttacking', 'enemy_attacking_animation');
     }
 
@@ -168,6 +181,9 @@ export default class Enemy extends Character {
  
          this.bulletHitAudio.play(musicConfig);
 
+
+
+    
         // Make hitbox temporarily really small , to stop it interacting with the sandbags
         this.body.setSize(1, 1, true);
 
@@ -216,6 +232,9 @@ export default class Enemy extends Character {
      * Will reset the enemy health and position
      */
     resetEnemy() {
+
+        // Stop sword hit sound effect
+        this.swordHitOneAudio.pause();
 
         setTimeout(() => {
             // Reset enemy position, health, is they are attacking and make enemy run
