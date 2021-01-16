@@ -76,6 +76,12 @@ export default class Enemy extends Character {
     enemyRun(speed = getRandomNumber(10, 40)) {
         this.playNewAnimation('enemyRunning', 'enemy_running_animation');
         this.body.velocity.x = `+${speed}`;
+
+        /**
+         * Stop sword hit sound effect as we don't want it playing 
+         * if the enemyRun if
+         */ 
+        this.swordHitOneAudio.pause();
     }
 
 
