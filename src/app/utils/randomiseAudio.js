@@ -12,7 +12,6 @@
 const randomiseAudio = (trackArray,config) => {
 
     const randomTrack = trackArray[Math.floor(Math.random()*trackArray.length)];
-    randomTrack.resume();
     randomTrack.play(config);
 }
 
