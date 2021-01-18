@@ -1,5 +1,7 @@
 import Character from './Character';
 import getRandomNumber from '../utils/getRandomNumber';
+import randomiseAudio from '../utils/randomiseAudio';
+import config from '../phaser/config';
 
 export default class Enemy extends Character {
 
@@ -40,6 +42,7 @@ export default class Enemy extends Character {
 
         // Add sword hit sound effect 
         this.swordHitOneAudio = this.scene.sound.add('sword_hit_one_audio');
+        this.swordHitTwoAudio = this.scene.sound.add('sword_hit_two_audio');
 
         // Just for testing
         this.playNewAnimation('enemyRunning', 'enemy_running_animation');
@@ -79,16 +82,17 @@ export default class Enemy extends Character {
 
         /**
          * Stop sword hit sound effect as we don't want it playing 
-         * if the enemyRun if
-         */ 
+         * if the enemy runs past the Sandbags
+         */
         this.swordHitOneAudio.pause();
+        this.swordHitTwoAudio.pause();
     }
 
 
 
     setStartingPosition() {
         /**
-        * Set starting y position and set zindex, 
+        * Set starting y position and set z-index, 
         * this is to stop the enemies overlapping in the wrong order and 
         * will help us when we add our tank traps
         */
@@ -141,17 +145,19 @@ export default class Enemy extends Character {
 
         this.state.isEnemyAttacking = true;
 
+        const musicConfig = {
+            mute: false,
+            volume: 1,
+            rate: 1,
+            detune: 0,
+            seek: 0,
+            loop: true,
+            delay: 0
+        }
+
         // play sword hit sound effect
-         this.swordHitOneAudio.resume();
-         this.swordHitOneAudio.play({
-             mute: false,
-             volume: 1,
-             rate: 1,
-             detune: 0,
-             seek: 0,
-             loop: true,
-             delay: 0.2
-         });
+        randomiseAudio([this.swordHitOneAudio, this.swordHitTwoAudio], musicConfig)
+
 
         this.playNewAnimation('enemyAttacking', 'enemy_attacking_animation');
     }
@@ -172,24 +178,24 @@ export default class Enemy extends Character {
             return;
         }
 
-         // Add audio 
-         this.bulletHitAudio = this.scene.sound.add('bullet_hit_audio');
+        // Add audio 
+        this.bulletHitAudio = this.scene.sound.add('bullet_hit_audio');
 
-         const musicConfig = {
-             mute: false,
-             volume: 1,
-             rate: 1,
-             detune: 0,
-             seek: 0,
-             loop: false,
-             delay: 0
-         }
- 
-         this.bulletHitAudio.play(musicConfig);
+        const musicConfig = {
+            mute: false,
+            volume: 1,
+            rate: 1,
+            detune: 0,
+            seek: 0,
+            loop: false,
+            delay: 0
+        }
+
+        this.bulletHitAudio.play(musicConfig);
 
 
 
-    
+
         // Make hitbox temporarily really small , to stop it interacting with the sandbags
         this.body.setSize(1, 1, true);
 
@@ -241,6 +247,7 @@ export default class Enemy extends Character {
 
         // Stop sword hit sound effect
         this.swordHitOneAudio.pause();
+        this.swordHitTwoAudio.pause();
 
         setTimeout(() => {
             // Reset enemy position, health, is they are attacking and make enemy run
