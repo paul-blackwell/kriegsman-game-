@@ -44,6 +44,9 @@ export default class Enemy extends Character {
         this.swordHitOneAudio = this.scene.sound.add('sword_hit_one_audio');
         this.swordHitTwoAudio = this.scene.sound.add('sword_hit_two_audio');
 
+        // Add running sound effect 
+        this.runningOneAudio = this.scene.sound.add('running_one_audio');
+
         // Just for testing
         this.playNewAnimation('enemyRunning', 'enemy_running_animation');
 
