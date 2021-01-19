@@ -146,10 +146,8 @@ export default class Scene2 extends Phaser.Scene {
         }
 
         if (difficulty === 'easy') {
-            //makeEnemiesGroup(3);
             makeEnemies(3);
         } else if (difficulty === 'hard') {
-            //makeEnemiesGroup(5);
             makeEnemies(5);
         }
 
@@ -170,8 +168,8 @@ export default class Scene2 extends Phaser.Scene {
 
         // After one second go to scene 3 and pass the players score
         setTimeout(() => {
-             // Stop background music otherwise it will play in scene 3
-            this.backgroundMusic.pause();
+             // Stop all audio form playing otherwise it will play in scene3
+            this.game.sound.stopAll();
             this.scene.start('endGame', { score: this.state.score });
         }, 1000)
 
