@@ -40,6 +40,8 @@ export default class Enemy extends Character {
             isEnemyAttacking: false,
         }
 
+
+
         // Add sword hit sound effect 
         this.swordHitOneAudio = this.scene.sound.add('sword_hit_one_audio');
         this.swordHitTwoAudio = this.scene.sound.add('sword_hit_two_audio');
@@ -47,7 +49,8 @@ export default class Enemy extends Character {
         // Add running sound effect 
         this.runningOneAudio = this.scene.sound.add('running_one_audio');
 
-        // Just for testing
+     
+        // Start by playing the enemyRunning animation
         this.playNewAnimation('enemyRunning', 'enemy_running_animation');
 
 
@@ -82,6 +85,17 @@ export default class Enemy extends Character {
     enemyRun(speed = getRandomNumber(10, 40)) {
         this.playNewAnimation('enemyRunning', 'enemy_running_animation');
         this.body.velocity.x = `+${speed}`;
+
+        // Play enemy running audio 
+        this.runningOneAudio.play({
+            mute: false,
+            volume: 1,
+            rate: 1,
+            detune: 0,
+            seek: 0,
+            loop: true,
+            delay: 0
+        });
 
         /**
          * Stop sword hit sound effect as we don't want it playing 
@@ -158,6 +172,9 @@ export default class Enemy extends Character {
             delay: 0
         }
 
+        // Stop running audio playing
+        this.runningOneAudio.pause();
+
         // play sword hit sound effect
         randomiseAudio([this.swordHitOneAudio, this.swordHitTwoAudio], musicConfig)
 
@@ -197,6 +214,8 @@ export default class Enemy extends Character {
         this.bulletHitAudio.play(musicConfig);
 
 
+        // Stop running audio playing
+        this.runningOneAudio.pause();
 
 
         // Make hitbox temporarily really small , to stop it interacting with the sandbags

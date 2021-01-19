@@ -40,7 +40,6 @@ export default class Scene2 extends Phaser.Scene {
 
         // Add background music
         this.backgroundMusic = this.sound.add('background_music_audio');
-        this.backgroundMusic.resume();
         this.backgroundMusic.play({
             mute: false,
             volume: 1,
@@ -140,7 +139,7 @@ export default class Scene2 extends Phaser.Scene {
         const makeEnemies = (numberOfEnemies) => {
             for (let i = 0; i < numberOfEnemies; i++) {
 
-                // Make new enemys and push to the enemies array
+                // Make new enemies and push to the enemies array
                 const enemy = new Enemy(this, 100);
                 enemies.push(enemy);
             }
