@@ -28,7 +28,7 @@ export default class GUI extends Phaser.GameObjects.Sprite {
         this.addCurrentAmmoText();
 
         // Add score text
-        this.currentScoreText = this.scene.add.text(610, 30, 'Score:', { fill: '#0f0' });
+        this.currentScoreText = this.scene.add.bitmapText(610, 30 , 'bitmapFont', 'Score', -12);
 
     }
 
@@ -37,10 +37,13 @@ export default class GUI extends Phaser.GameObjects.Sprite {
     addCommissar() {
         this.commissarImage = this.scene.add.image(290, 62, 'commissar');
 
-        // Text for  'Select difficulty:'
-        this.commissarHeading = this.scene.add.text(30, 30, 'Commissar-General Maugh:', { fill: '#0f0' });
-        this.commissarText1 = this.scene.add.text(30, 60, '"Hold out as long \n as you can..."', { fill: '#0f0' });
-        this.commissarText2 = this.scene.add.text(30, 60, '"your death will not \n be in vain"', { fill: '#0f0' });
+
+        //this.currentAmoText = this.scene.add.bitmapText(1030, 30 , 'bitmapFont', 'Ammunition:', -12);
+
+        this.commissarHeading = this.scene.add.bitmapText(30, 30, 'bitmapFont', 'Commissar Maugh:', -12);
+        this.commissarText1 = this.scene.add.bitmapText(30, 60,'bitmapFont', '"Hold out as long \n as you can..."', -12);
+        this.commissarText2 = this.scene.add.bitmapText(30, 60,'bitmapFont', '"your death will not \n be in vain"', -12);
+
 
         // Set alpha to 0
         this.commissarImage.alpha = 0;
@@ -94,7 +97,7 @@ export default class GUI extends Phaser.GameObjects.Sprite {
 
 
     addCurrentAmmoText() {
-        this.currentAmoText = this.scene.add.text(1030, 30, 'Ammunition:', { fill: '#0f0' });
+        this.currentAmoText = this.scene.add.bitmapText(1030, 30 , 'bitmapFont', 'Ammunition:', -12);
     }
 
 
@@ -104,7 +107,7 @@ export default class GUI extends Phaser.GameObjects.Sprite {
         this.ammoCounter.updateAmmoCount(ammoCount);
 
         // Update score text
-        this.currentScoreText.setText(`Score:\n\n${score}`);
+        this.currentScoreText.setText(`Score:\n${score}`);
 
     }
 }

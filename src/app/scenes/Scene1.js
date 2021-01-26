@@ -34,8 +34,8 @@ import runningOne from '../../assets/audio/running-Fx-1.mp3';
 
 
 // Fonts
-import fontPNG from '../../assets/fonts/customFont_0.png';
-import fontXML from '../../assets/fonts/customFont.fnt';
+import fontPNG from '../../assets/fonts/custom-font.png';
+import fontFNT from '../../assets/fonts/custom-font.fnt';
 
 
 
@@ -48,8 +48,8 @@ export default class Scene1 extends Phaser.Scene {
     // Preload all Images an spites 
     preload() {
 
-        // Just for testing
-        this.load.bitmapFont('pixelFont', fontPNG, fontXML)
+        // Load font
+        this.load.bitmapFont('bitmapFont', fontPNG, fontFNT)
 
 
         // Image for game title
@@ -260,9 +260,6 @@ export default class Scene1 extends Phaser.Scene {
             frameRate: 16,
         });
 
-
-        // Test font
-        this.testFont = this.add.bitmapText(this.cameras.main.width / 2, 100 , 'pixelFont', 'test', -16)
 
         // Add Title
         this.title = this.add.image(this.cameras.main.width / 2, 240, 'gameTitle');
