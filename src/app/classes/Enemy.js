@@ -1,7 +1,7 @@
 import Character from './Character';
 import getRandomNumber from '../utils/getRandomNumber';
 import randomiseAudio from '../utils/randomiseAudio';
-import config from '../phaser/config';
+
 
 export default class Enemy extends Character {
 

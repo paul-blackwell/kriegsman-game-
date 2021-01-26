@@ -79,8 +79,6 @@ export default class Sandbags extends Phaser.GameObjects.Sprite {
 
                 // Play fadeout 
                 timeline.play();
-
-                console.log('should only fire one time')
                 break;
         }
     }

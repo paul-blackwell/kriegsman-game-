@@ -13,7 +13,6 @@ import tankTrapsLayerTwo from '../../assets/images/tank-trap-layer-2.png';
 
 // Spites
 import sandbags from '../../assets/spritesheets/sandbags-sprite-sheet.png';
-//import tankTrap from '../../assets/spritesheets/single-tank-trap-spite-sheet.png'
 import playerIdle from '../../assets/spritesheets/krieg-guardsman-shritesheet.png'
 import playerWalking from '../../assets/spritesheets/krieg-guardsman-animated-walking-sprite.png';
 import playerShooting from '../../assets/spritesheets/krieg-guardsman-animated-shooting-sprite.png';
@@ -106,13 +105,6 @@ export default class Scene1 extends Phaser.Scene {
             frameWidth: 256,
             frameHeight: 384,
         });
-
-
-        // tankTrap spritesheet
-        // this.load.spritesheet('tankTrap', tankTrap, {
-        //     frameWidth: 160,
-        //     frameHeight: 128,
-        // });
 
 
         // Player spritesheet (for player Idle)
