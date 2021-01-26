@@ -45,7 +45,6 @@
     "xml-loader": "^1.2.1"
   },
   "dependencies": {
-    "jquery": "^3.5.1",
     "npm": "^6.14.6",
     "phaser": "^3.24.1",
     "popper.js": "^1.14.3"
