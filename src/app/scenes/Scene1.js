@@ -6,7 +6,7 @@ import foreground from '../../assets/images/foreground.png';
 import GUI from '../../assets/images/GUI.png';
 import commissar from '../../assets/images/krieg-commissar-upper-body.png';
 import playEasyButton from '../../assets/images/play-easy-button.png';
-
+import playHardButton from '../../assets/images/play-hard-button.png';
 
 // Spites
 import sandbags from '../../assets/spritesheets/sandbags-sprite-sheet.png';
@@ -44,6 +44,9 @@ export default class Scene1 extends Phaser.Scene {
 
         // Image for play easy button
         this.load.image('playEasyButton', playEasyButton);
+
+        // Image fo play hard button
+        this.load.image('playHardButton', playHardButton);
 
         // Image for background
         this.load.image('background', background);
@@ -246,13 +249,13 @@ export default class Scene1 extends Phaser.Scene {
 
 
         // Difficulty buttons
-        this.difficultyEasyButton = this.add.image(this.cameras.main.width / 2, 520, 'playEasyButton');
+        this.difficultyEasyButton = this.add.image(this.cameras.main.width / 2, 400, 'playEasyButton');
         this.difficultyEasyButton.setInteractive({ useHandCursor: true  });
         this.difficultyEasyButton.on('pointerdown', () => this.scene.start('playGame', { difficulty: 'easy' }));
 
-        const difficultyHardButton = this.add.text(100, 180, 'Hard', { fill: '#0f0' });
-        difficultyHardButton.setInteractive();
-        difficultyHardButton.on('pointerdown', () => this.scene.start('playGame', { difficulty: 'hard' }));
+        this.difficultyHardButton = this.add.image(this.cameras.main.width / 2, 480, 'playHardButton');
+        this.difficultyHardButton.setInteractive({ useHandCursor: true  });
+        this.difficultyHardButton.on('pointerdown', () => this.scene.start('playGame', { difficulty: 'hard' }));
 
     }
 }
