@@ -32,29 +32,30 @@ export default class Scene3 extends Phaser.Scene {
 
 
 
-        // Just for testing
+        // Set background colour 
         this.cameras.main.setBackgroundColor('#112318');
 
         // Text for  heading
-        this.heading = this.add.text(100, 100, 'Game over', { fill: '#0f0' });
-
+        this.heading = this.add.bitmapText((this.cameras.main.width / 2) - 70, 140, 'bitmapFont', 'Game over', -24, 'center');
+        
 
         // Text for high Score
-        this.highScore = this.add.text(100, 130, `High score: ${getHighScoreFromLocalStorage()}`, { fill: '#0f0' });
+        this.highScore = this.add.bitmapText((this.cameras.main.width / 2) - 50, 190, 'bitmapFont', `High score: ${getHighScoreFromLocalStorage()}`, -12);
 
-        // Text for  player score
-        this.playerScore = this.add.text(100, 160, `Your score: ${this.score}`, { fill: '#0f0' });
+        // Text for player score) - 70
+        this.playerScore = this.add.bitmapText((this.cameras.main.width / 2) - 50, 220, 'bitmapFont', `Your score: ${this.score}`, -12);
 
-        this.newGameHeading = this.add.text(100, 190, 'New Game:', { fill: '#0f0' });
+        // Text for heading
+        this.newGameHeading = this.add.bitmapText((this.cameras.main.width / 2) - 70, 280, 'bitmapFont', 'New Game', -24);
 
-       // Difficulty buttons
-       this.difficultyEasyButton = this.add.image(this.cameras.main.width / 2, 360, 'playEasyButton');
-       this.difficultyEasyButton.setInteractive({ useHandCursor: true  });
-       this.difficultyEasyButton.on('pointerdown', () => this.scene.start('playGame', { difficulty: 'easy' }));
+        // Difficulty buttons
+        this.difficultyEasyButton = this.add.image(this.cameras.main.width / 2, 360, 'playEasyButton');
+        this.difficultyEasyButton.setInteractive({ useHandCursor: true });
+        this.difficultyEasyButton.on('pointerdown', () => this.scene.start('playGame', { difficulty: 'easy' }));
 
-       this.difficultyHardButton = this.add.image(this.cameras.main.width / 2, 440, 'playHardButton');
-       this.difficultyHardButton.setInteractive({ useHandCursor: true  });
-       this.difficultyHardButton.on('pointerdown', () => this.scene.start('playGame', { difficulty: 'hard' }));
+        this.difficultyHardButton = this.add.image(this.cameras.main.width / 2, 440, 'playHardButton');
+        this.difficultyHardButton.setInteractive({ useHandCursor: true });
+        this.difficultyHardButton.on('pointerdown', () => this.scene.start('playGame', { difficulty: 'hard' }));
     }
-    
+
 }

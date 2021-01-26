@@ -183,6 +183,7 @@ export default class Scene1 extends Phaser.Scene {
         loader.classList.add('loader--hide');
 
 
+
         // Set background colour 
         this.cameras.main.setBackgroundColor('#112318');
 
