@@ -8,10 +8,12 @@ import commissar from '../../assets/images/krieg-commissar-upper-body.png';
 import playEasyButton from '../../assets/images/play-easy-button.png';
 import playHardButton from '../../assets/images/play-hard-button.png';
 import gameTitle from '../../assets/images/game-title.png';
+import tankTrapsLayerOne from '../../assets/images/tank-trap-layer-1.png';
+import tankTrapsLayerTwo from '../../assets/images/tank-trap-layer-2.png';
 
 // Spites
 import sandbags from '../../assets/spritesheets/sandbags-sprite-sheet.png';
-import tankTrap from '../../assets/spritesheets/single-tank-trap-spite-sheet.png'
+//import tankTrap from '../../assets/spritesheets/single-tank-trap-spite-sheet.png'
 import playerIdle from '../../assets/spritesheets/krieg-guardsman-shritesheet.png'
 import playerWalking from '../../assets/spritesheets/krieg-guardsman-animated-walking-sprite.png';
 import playerShooting from '../../assets/spritesheets/krieg-guardsman-animated-shooting-sprite.png';
@@ -51,7 +53,6 @@ export default class Scene1 extends Phaser.Scene {
         // Load font
         this.load.bitmapFont('bitmapFont', fontPNG, fontFNT)
 
-
         // Image for game title
         this.load.image('gameTitle', gameTitle);
 
@@ -66,6 +67,12 @@ export default class Scene1 extends Phaser.Scene {
 
         // Image for foreground
         this.load.image('foreground', foreground);
+
+        // Image for tank trap layer one 
+        this.load.image('tankTrapsLayerOne', tankTrapsLayerOne);
+
+        // Image for tank trap layer two 
+        this.load.image('tankTrapsLayerTwo', tankTrapsLayerTwo);
 
         // Image for GUI
         this.load.image('GUI', GUI);
@@ -102,10 +109,10 @@ export default class Scene1 extends Phaser.Scene {
 
 
         // tankTrap spritesheet
-        this.load.spritesheet('tankTrap', tankTrap, {
-            frameWidth: 160,
-            frameHeight: 128,
-        });
+        // this.load.spritesheet('tankTrap', tankTrap, {
+        //     frameWidth: 160,
+        //     frameHeight: 128,
+        // });
 
 
         // Player spritesheet (for player Idle)

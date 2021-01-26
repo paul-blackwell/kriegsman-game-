@@ -35,6 +35,11 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
         // Set the bullets velocity so it moves across the screen
         this.body.velocity.x = -1000;
 
+         /**
+         * Set depth (z-index) to 10 so tank trap layers
+         * don't overlap the bullet
+         */
+        this.depth = 10;
 
         /**
          * Add the bullet to the activeBullets array, 

@@ -41,6 +41,15 @@ export default class Player extends Character {
         this.x = 1180;
         this.y = 400;
 
+       
+     
+       
+        /**
+         * Set depth (z-index) to 10 so tank trap layers
+         * don't overlap the player
+         */
+        this.depth = 10;
+
         // Make enemy interactive
         this.setInteractive();
 

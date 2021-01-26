@@ -4,7 +4,7 @@ import config from '../phaser/config';
 
 import GUI from '../classes/GUI';
 import Sandbags from '../classes/Sandbags';
-import TankTrap from '../classes/TankTrap';
+//import TankTrap from '../classes/TankTrap';
 import Player from '../classes/Player';
 import Enemy from '../classes/Enemy';
 
@@ -35,6 +35,12 @@ export default class Scene2 extends Phaser.Scene {
         // Add foreground
         this.foreground = this.add.image(this.cameras.main.width / 2, config.height - 205, 'foreground');
 
+        // Add tank traps
+        this.tankTrapsOne = this.add.image(this.cameras.main.width / 2, config.height - 205, 'tankTrapsLayerOne');
+        this.tankTrapsTwo = this.add.image(this.cameras.main.width / 2, config.height - 205, 'tankTrapsLayerTwo');
+        this.tankTrapsOne.depth = 2;
+        this.tankTrapsTwo.depth = 10;
+
         // Add GUI
         this.gui = new GUI(this, this.cameras.main.width / 2, config.height - 320, this.state.ammoCount);
 
@@ -52,9 +58,9 @@ export default class Scene2 extends Phaser.Scene {
 
 
         // Add tank traps
-        this.tankTrap1 = new TankTrap(this, 700);
-        this.tankTrap2 = new TankTrap(this, 100);
-        this.tankTrap2 = new TankTrap(this, 400);
+        //this.tankTrap1 = new TankTrap(this, 700);
+        //this.tankTrap2 = new TankTrap(this, 100);
+        //this.tankTrap2 = new TankTrap(this, 400);
 
         // And Sandbags
         this.sandbags = new Sandbags(this, 100);

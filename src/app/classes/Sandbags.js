@@ -21,6 +21,13 @@ export default class Sandbags extends Phaser.GameObjects.Sprite {
         // Enable sprite sheet to have physics
         scene.physics.world.enableBody(this);
 
+         /**
+         * Set depth (z-index) to 10 so tank trap layers
+         * don't overlap the sandbags
+         */
+        this.depth = 10;
+
+
         /**
          * - Add sprite texture
          * - Set sprite to first frame
