@@ -37,9 +37,6 @@ export default class GUI extends Phaser.GameObjects.Sprite {
     addCommissar() {
         this.commissarImage = this.scene.add.image(290, 62, 'commissar');
 
-
-        //this.currentAmoText = this.scene.add.bitmapText(1030, 30 , 'bitmapFont', 'Ammunition:', -12);
-
         this.commissarHeading = this.scene.add.bitmapText(30, 30, 'bitmapFont', 'Commissar Maugh:', -12);
         this.commissarText1 = this.scene.add.bitmapText(30, 60,'bitmapFont', '"Hold out as long \n as you can..."', -12);
         this.commissarText2 = this.scene.add.bitmapText(30, 60,'bitmapFont', '"your death will not \n be in vain"', -12);
@@ -80,6 +77,7 @@ export default class GUI extends Phaser.GameObjects.Sprite {
             targets: this.commissarText1,
             alpha: 0,
             ease: 'Power1',
+            delay: 3000,
             duration: 1000
         });
 
