@@ -33,7 +33,7 @@ export default class Scene3 extends Phaser.Scene {
 
 
         // Just for testing
-        this.cameras.main.setBackgroundColor('#040C06');
+        this.cameras.main.setBackgroundColor('#112318');
 
         // Text for  heading
         this.heading = this.add.text(100, 100, 'Game over', { fill: '#0f0' });

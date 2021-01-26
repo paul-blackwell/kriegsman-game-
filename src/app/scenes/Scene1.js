@@ -5,7 +5,8 @@ import background from '../../assets/images/background.png'
 import foreground from '../../assets/images/foreground.png';
 import GUI from '../../assets/images/GUI.png';
 import commissar from '../../assets/images/krieg-commissar-upper-body.png';
-import blankButton from '../..//assets/images/blank-button.png';
+import playEasyButton from '../../assets/images/play-easy-button.png';
+
 
 // Spites
 import sandbags from '../../assets/spritesheets/sandbags-sprite-sheet.png';
@@ -41,8 +42,8 @@ export default class Scene1 extends Phaser.Scene {
     // Preload all Images an spites 
     preload() {
 
-        // Image for blank button, just for testing
-        this.load.image('blankButton', blankButton);
+        // Image for play easy button
+        this.load.image('playEasyButton', playEasyButton);
 
         // Image for background
         this.load.image('background', background);
@@ -167,7 +168,7 @@ export default class Scene1 extends Phaser.Scene {
 
 
         // Set background colour 
-        this.cameras.main.setBackgroundColor('#040C06');
+        this.cameras.main.setBackgroundColor('#112318');
 
 
         // Animation of the player idle
@@ -244,21 +245,10 @@ export default class Scene1 extends Phaser.Scene {
         });
 
 
-
-        // Text for  'Select difficulty:'
-        this.text = this.add.text(100, 100, 'Select difficulty:', { fill: '#0f0' });
-
-
-        // For report https://snowbillr.github.io/blog/2018-07-03-buttons-in-phaser-3/
-        // https://www.youtube.com/watch?v=S1VSKkL_ePM&t=149s
-
         // Difficulty buttons
-        this.difficultyEasyButton = this.add.image(this.cameras.main.width / 2, 520, 'blankButton');
-
-        // Difficulty buttons
-        // const difficultyEasyButton = this.add.text(100, 140, 'Easy', { fill: '#0f0' });
-        // difficultyEasyButton.setInteractive();
-        // difficultyEasyButton.on('pointerdown', () => this.scene.start('playGame', { difficulty: 'easy' }));
+        this.difficultyEasyButton = this.add.image(this.cameras.main.width / 2, 520, 'playEasyButton');
+        this.difficultyEasyButton.setInteractive({ useHandCursor: true  });
+        this.difficultyEasyButton.on('pointerdown', () => this.scene.start('playGame', { difficulty: 'easy' }));
 
         const difficultyHardButton = this.add.text(100, 180, 'Hard', { fill: '#0f0' });
         difficultyHardButton.setInteractive();
