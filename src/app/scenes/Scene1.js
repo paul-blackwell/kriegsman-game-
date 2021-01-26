@@ -7,6 +7,7 @@ import GUI from '../../assets/images/GUI.png';
 import commissar from '../../assets/images/krieg-commissar-upper-body.png';
 import playEasyButton from '../../assets/images/play-easy-button.png';
 import playHardButton from '../../assets/images/play-hard-button.png';
+import gameTitle from '../../assets/images/game-title.png';
 
 // Spites
 import sandbags from '../../assets/spritesheets/sandbags-sprite-sheet.png';
@@ -32,6 +33,11 @@ import swordTwo from '../../assets/audio/sword-Fx-2.mp3';
 import runningOne from '../../assets/audio/running-Fx-1.mp3';
 
 
+// Fonts
+import fontPNG from '../../assets/fonts/customFont_0.png';
+import fontXML from '../../assets/fonts/customFont.fnt';
+
+
 
 export default class Scene1 extends Phaser.Scene {
 
@@ -41,6 +47,13 @@ export default class Scene1 extends Phaser.Scene {
 
     // Preload all Images an spites 
     preload() {
+
+        // Just for testing
+        this.load.bitmapFont('pixelFont', fontPNG, fontXML)
+
+
+        // Image for game title
+        this.load.image('gameTitle', gameTitle);
 
         // Image for play easy button
         this.load.image('playEasyButton', playEasyButton);
@@ -248,12 +261,19 @@ export default class Scene1 extends Phaser.Scene {
         });
 
 
+        // Test font
+        this.testFont = this.add.bitmapText(this.cameras.main.width / 2, 100 , 'pixelFont', 'test', -16)
+
+        // Add Title
+        this.title = this.add.image(this.cameras.main.width / 2, 240, 'gameTitle');
+
+
         // Difficulty buttons
-        this.difficultyEasyButton = this.add.image(this.cameras.main.width / 2, 400, 'playEasyButton');
+        this.difficultyEasyButton = this.add.image(this.cameras.main.width / 2, 360, 'playEasyButton');
         this.difficultyEasyButton.setInteractive({ useHandCursor: true  });
         this.difficultyEasyButton.on('pointerdown', () => this.scene.start('playGame', { difficulty: 'easy' }));
 
-        this.difficultyHardButton = this.add.image(this.cameras.main.width / 2, 480, 'playHardButton');
+        this.difficultyHardButton = this.add.image(this.cameras.main.width / 2, 440, 'playHardButton');
         this.difficultyHardButton.setInteractive({ useHandCursor: true  });
         this.difficultyHardButton.on('pointerdown', () => this.scene.start('playGame', { difficulty: 'hard' }));
 
