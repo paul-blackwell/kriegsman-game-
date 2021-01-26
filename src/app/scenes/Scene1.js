@@ -5,6 +5,7 @@ import background from '../../assets/images/background.png'
 import foreground from '../../assets/images/foreground.png';
 import GUI from '../../assets/images/GUI.png';
 import commissar from '../../assets/images/krieg-commissar-upper-body.png';
+import blankButton from '../..//assets/images/blank-button.png';
 
 // Spites
 import sandbags from '../../assets/spritesheets/sandbags-sprite-sheet.png';
@@ -39,6 +40,10 @@ export default class Scene1 extends Phaser.Scene {
 
     // Preload all Images an spites 
     preload() {
+
+        // Image for blank button, just for testing
+        this.load.image('blankButton', blankButton);
+
         // Image for background
         this.load.image('background', background);
 
@@ -248,9 +253,12 @@ export default class Scene1 extends Phaser.Scene {
         // https://www.youtube.com/watch?v=S1VSKkL_ePM&t=149s
 
         // Difficulty buttons
-        const difficultyEasyButton = this.add.text(100, 140, 'Easy', { fill: '#0f0' });
-        difficultyEasyButton.setInteractive();
-        difficultyEasyButton.on('pointerdown', () => this.scene.start('playGame', { difficulty: 'easy' }));
+        this.difficultyEasyButton = this.add.image(this.cameras.main.width / 2, 520, 'blankButton');
+
+        // Difficulty buttons
+        // const difficultyEasyButton = this.add.text(100, 140, 'Easy', { fill: '#0f0' });
+        // difficultyEasyButton.setInteractive();
+        // difficultyEasyButton.on('pointerdown', () => this.scene.start('playGame', { difficulty: 'easy' }));
 
         const difficultyHardButton = this.add.text(100, 180, 'Hard', { fill: '#0f0' });
         difficultyHardButton.setInteractive();
