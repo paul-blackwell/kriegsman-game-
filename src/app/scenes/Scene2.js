@@ -28,6 +28,11 @@ export default class Scene2 extends Phaser.Scene {
 
     create() {
 
+        /**
+         * Set the score to 0,we need to do this because if the game
+         * loads from scene 3 the score will be set to the old score
+         */
+        this.state.score = 0;
 
         // Add background
         this.background = this.add.image(this.cameras.main.width / 2, config.height - 520, 'background');
@@ -57,10 +62,6 @@ export default class Scene2 extends Phaser.Scene {
         });
 
 
-        // Add tank traps
-        //this.tankTrap1 = new TankTrap(this, 700);
-        //this.tankTrap2 = new TankTrap(this, 100);
-        //this.tankTrap2 = new TankTrap(this, 400);
 
         // And Sandbags
         this.sandbags = new Sandbags(this, 100);
@@ -68,6 +69,15 @@ export default class Scene2 extends Phaser.Scene {
 
         // Make Player
         this.player = new Player(this);
+
+
+        /**
+         * Reload players gun, this is if they play again from
+         * scene 3 we want their amo count to be a 6 rounds 
+         */
+        this.player.playerReload();
+
+
 
         // Make enemies using the makeEnemies method based on difficulty
         this.enemies = this.makeEnemies(this.difficulty);
@@ -174,11 +184,8 @@ export default class Scene2 extends Phaser.Scene {
 
         // After one second go to scene 3 and pass the players score
         setTimeout(() => {
-             // Stop all audio form playing otherwise it will play in scene3
+            // Stop all audio form playing otherwise it will play in scene3
             this.game.sound.stopAll();
-
-            // Reload players gun, this is if they play again 
-            this.player.playerReload();
 
             this.scene.start('endGame', { score: this.state.score });
         }, 1000)
