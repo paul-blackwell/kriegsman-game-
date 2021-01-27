@@ -176,6 +176,10 @@ export default class Scene2 extends Phaser.Scene {
         setTimeout(() => {
              // Stop all audio form playing otherwise it will play in scene3
             this.game.sound.stopAll();
+
+            // Reload players gun, this is if they play again 
+            this.player.playerReload();
+
             this.scene.start('endGame', { score: this.state.score });
         }, 1000)
 
