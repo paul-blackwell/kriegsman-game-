@@ -75,8 +75,7 @@ export default class Scene2 extends Phaser.Scene {
          * Reload players gun, this is if they play again from
          * scene 3 we want their amo count to be a 6 rounds 
          */
-        this.player.playerReload();
-
+        //this.player.playerReload();
 
 
         // Make enemies using the makeEnemies method based on difficulty
