@@ -301,16 +301,4 @@ export default class Enemy extends Character {
 
 
 
-    /**
-   * Note:
-   * For performance reasons Phaser won't run the objects 
-   * update automatically so, we need to call the update 
-   * for each enemy in the main update in the 'Scene 2'
-   */
-    // update() {
-    //     if (this.character.x > 1000) {
-    //         this.enemyAttack();
-    //     }
-    // }
-
 }
