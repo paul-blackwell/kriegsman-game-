@@ -4,7 +4,6 @@ import config from '../phaser/config';
 
 import GUI from '../classes/GUI';
 import Sandbags from '../classes/Sandbags';
-//import TankTrap from '../classes/TankTrap';
 import Player from '../classes/Player';
 import Enemy from '../classes/Enemy';
 
@@ -69,13 +68,6 @@ export default class Scene2 extends Phaser.Scene {
 
         // Make Player
         this.player = new Player(this);
-
-
-        /**
-         * Reload players gun, this is if they play again from
-         * scene 3 we want their amo count to be a 6 rounds 
-         */
-        //this.player.playerReload();
 
 
         // Make enemies using the makeEnemies method based on difficulty
@@ -242,6 +234,7 @@ export default class Scene2 extends Phaser.Scene {
 
         // This will end game is state set to true
         if (this.state.gameOver) {
+
 
             // End game
             this.gameOver();

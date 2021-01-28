@@ -1,7 +1,7 @@
 /**
-   * Title: getRandomNumber source code
+   * Title: Generating random whole numbers in JavaScript in a specific range
    * Author: Lior Elrom
-   * Date: 2020
+   * Date: 20 October 2020
    * Code version: 1.0
    * Availability: https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
    * 
